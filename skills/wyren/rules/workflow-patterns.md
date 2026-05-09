@@ -29,6 +29,11 @@ Each node type has a specific role. Connect them based on what data flows where:
 | `storyAI`               | `scene_1`–`scene_5`      | `imageAI`         | `text`        | Scene prompt → image per scene                                                                                        |
 | `imageAI` #1            | `image`                  | `imageAI` #2      | `image`       | Reference chain for character consistency                                                                             |
 | `videoAI`               | `firstFrame`/`lastFrame` | `videoAI` (next)  | `startFrame`  | Scene continuity across clips                                                                                         |
+| `audioInput`            | `audio`                  | `audioAnalyze`    | `audio`       | Music bed → BPM + beat detection                                                                                      |
+| `audioInput`            | `audio`                  | `audioOverlay`    | `audio`       | Music bed → mix or replace audio on a video                                                                           |
+| `audioInput`            | `audio`                  | `slideshow`       | `audio`       | Music bed → slideshow soundtrack                                                                                      |
+| `audioAnalyze`          | `beats`                  | `videoMerge`      | `beats`       | Beat grid → set `beatSyncEnabled` + `beatsPerClip` to retime clips to bar boundaries                                  |
+| `audioAnalyze`          | `beats`                  | `slideshow`       | `beats`       | Beat grid → set `beatSyncEnabled` for bar-aligned image durations                                                     |
 
 **Anti-patterns** (never do these):
 
@@ -281,6 +286,35 @@ Use `tiktokResearch` to analyze a trending video, then create content inspired b
 - Connect `content` → `textAI` for context-aware prompt generation
 - Connect `clip` → `videoAI` as a video reference (model must support it)
 - Connect `frame` → `imageAI` as a reference image
+
+## Pattern: Beat-synced video / slideshow
+
+For music-driven video edits where cuts should land on the beat:
+
+```
+audioInput → audioAnalyze ─┐
+                            ├─→ videoMerge   (beat-aligned cuts)
+videoInput #1 ─→ ─────────┘     beatSyncEnabled: true, beatsPerClip: 2
+videoInput #2 ─→ ─────────┘
+videoInput #3 ─→ ─────────┘
+```
+
+Or for an image slideshow that drops on bars:
+
+```
+audioInput → audioAnalyze ─┐
+                            ├─→ slideshow   (bar-aligned image durations)
+imageAI #1..N ─→ ──────────┘    beatSyncEnabled: true, beatsPerImage: 2
+```
+
+Notes:
+
+- `audioAnalyze` is **non-billable**. Globally cached on `(sourceUrl, tempoHint, windowSeconds)`, so subsequent runs against the same track are instant.
+- `audioAnalyze` outputs a `beats` socket (separate from `audio`) — connect that to the `beats` input on videoMerge or slideshow, not the `audio` input.
+- Default `beatsPerClip` / `beatsPerImage` is 2 (i.e. one bar per item under 4/4).
+- `speedTolerance` (default 0.15) controls whether a clip retimes via setpts/atempo (within ±15%) or hard-trims to the nearest beat. Set lower to favor hard cuts, higher to favor speed-matching.
+- Same `audioInput` can feed both `slideshow` (audio bed) and `audioAnalyze` (beat detection) — wire one output to two consumers.
+- For raw music drops over an existing video without beat alignment, use `audioOverlay` (Audio Mix) instead — it has `loop`, `volume`, `fadeInSec`, `fadeOutSec`, and `startOffset` for polish.
 
 ## Pattern: Style-consistent content
 
