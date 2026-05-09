@@ -9,6 +9,7 @@
 | `textInput`  | Text Input  | text          | User-provided text (prompts, descriptions, scripts) |
 | `imageInput` | Image Input | image         | User-provided image (reference photos, logos)       |
 | `videoInput` | Video Input | video         | User-provided video (source footage)                |
+| `audioInput` | Audio Input | audio         | User-provided audio (music beds, voiceover stems, songs) |
 
 ### AI nodes (generate content — cost credits)
 
@@ -29,20 +30,23 @@
 | `gate`           | Gate            | Human-in-the-loop candidate selector — accumulates upstream runs, user picks one, downstream sees the pick |
 | `trendSelector`  | Trend Selector  | Picks trending topics from the trend database             |
 | `tiktokResearch` | TikTok Research | Analyzes TikTok trends and content                        |
+| `audioAnalyze`   | Audio Beats     | BPM + beat detection on an audio source. Outputs `tempo`, `beats` (struct), `firstBeat`, `barTimes`. Non-billable. Globally cached. |
 
 ### Edit nodes (transform media)
 
-| Type            | Label          | Input                   | Output | Purpose                        |
-| --------------- | -------------- | ----------------------- | ------ | ------------------------------ |
-| `videoTrim`     | Video Trim     | video                   | video  | Trim start/end of a video      |
-| `videoMerge`    | Video Merge    | video (multiple)        | video  | Combine multiple videos        |
-| `videoCaptions` | Video Captions | video, audio (optional) | video  | Add captions/subtitles overlay |
+| Type            | Label          | Input                          | Output | Purpose                                                                                                |
+| --------------- | -------------- | ------------------------------ | ------ | ------------------------------------------------------------------------------------------------------ |
+| `videoTrim`     | Video Cut      | video                          | video  | Trim start/end + optional `playbackSpeed` (0.25–4.0) and `preservePitch`                                |
+| `videoMerge`    | Video Merge    | videos (N), beats (optional)   | video  | Combine multiple videos. With Beats input + `beatSyncEnabled`, each clip retimes to bar boundaries     |
+| `audioOverlay`  | Audio Mix      | video, audio (or local URLs)   | video  | Replace/mix audio onto a video. Polish: `loop`, `fadeInSec`, `fadeOutSec`, `volume`, `startOffset`     |
+| `audioExtract`  | Audio Extract  | video                          | audio  | Extract audio track from a video (AAC or MP3)                                                          |
+| `videoCaptions` | Video Captions | video, audio (optional)        | video  | Add captions/subtitles overlay                                                                         |
 
 ### Compose nodes (combine media)
 
 | Type        | Label     | Purpose                                       |
 | ----------- | --------- | --------------------------------------------- |
-| `slideshow` | Slideshow | Combine images + audio into a video slideshow |
+| `slideshow` | Slideshow | Combine images + audio into a video slideshow. With Beats input + `beatSyncEnabled`, each image aligns to bar boundaries |
 
 ### Flow nodes (control execution)
 
@@ -53,15 +57,16 @@
 
 ## Socket types
 
-There are 5 socket types. Connections are only valid between compatible sockets:
+There are 6 socket types. Connections are only valid between compatible sockets:
 
-| Socket  | Color  | Compatible with           |
-| ------- | ------ | ------------------------- |
-| `text`  | Blue   | text, any                 |
-| `image` | Green  | image, any                |
-| `video` | Purple | video, any                |
-| `audio` | Orange | audio, any                |
-| `any`   | Gray   | text, image, video, audio |
+| Socket  | Color      | Compatible with                  |
+| ------- | ---------- | -------------------------------- |
+| `text`  | Indigo     | text, any                        |
+| `image` | Teal       | image, any                       |
+| `video` | Amber      | video, any                       |
+| `audio` | Purple     | audio, any                       |
+| `beats` | Dusty Rose | beats only (audioAnalyze output) |
+| `any`   | Gray       | text, image, video, audio        |
 
 **Rule**: You can only connect an output to an input if their socket types are compatible.
 
@@ -107,6 +112,11 @@ Common handles:
 - `videoCaptions`: output `video`, inputs `video`, `audio`
 - `videoMerge`: outputs `video`, `duration`; input `videos` (plural — accepts up to 10 connections)
 - `videoTrim`: output `video`, input `video`
-- `audioOverlay`: output `video`, `duration`; inputs `video`, `audio` — merges audio onto video (replace or mix mode)
-- `slideshow`: output `video`, inputs `images` (plural), `audio`
+- `audioInput`: output `audio` (multi-file)
+- `audioAnalyze`: outputs `tempo` (text), `beats` (beats struct), `firstBeat` (text), `barTimes` (beats); input `audio`
+- `audioOverlay` (Audio Mix): output `video`, `duration`; inputs `video`, `audio` — merges audio onto video (replace or mix mode); polish fields apply only when set
+- `audioExtract`: output `audio`; input `video`
+- `videoMerge`: outputs `video`, `duration`; inputs `videos` (plural — up to 10), `beats` (optional — pair with `beatSyncEnabled` + `beatsPerClip` to retime clips to bars)
+- `videoTrim` (Video Cut): output `video`, input `video`; speed via `playbackSpeed` + `preservePitch`
+- `slideshow`: output `video`, inputs `images` (plural), `audio`, `beats` (optional — pair with `beatSyncEnabled` for bar-aligned image durations)
 - `iterator`/`closeIterator`: output `items`/`collected`
