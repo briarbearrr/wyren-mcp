@@ -132,12 +132,7 @@ function pickCpuConcurrency() {
 }
 
 async function handleCaptionJob(jobId, sendProgress) {
-  const job = await authedFetch('GET', `/api/jobs/${jobId}`).catch(async () => {
-    // The backend may not expose a per-job GET yet; fall back to the
-    // existing v1 status endpoint that the MCP polling tool uses.
-    return authedFetch('GET', `/api/v1/jobs/${jobId}`);
-  });
-
+  const job = await authedFetch('GET', `/api/jobs/${jobId}`);
   const config = job?.config ?? job;
   if (!config?.videoUrl || !config?.captionConfig) {
     throw new Error(`Job ${jobId} missing videoUrl or captionConfig`);
