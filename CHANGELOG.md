@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.0
+
+- **Fixed** Caption (and slideshow) renders failed in the daemon: the vendored `remotion-bundle` was missing `bundle.js.map`, which Remotion's `prepareServer` reads — `sync-worker.mjs` was stripping ALL `.map` files. It now keeps the Remotion bundle maps (still drops the worker's debug map).
+- **Fixed** Chunked captions served trimmed segments over `file://`, which Chromium refuses (fails on WSL2; OffthreadVideo is http-only). Segments are now served over a loopback HTTP server (Range + CORS).
+- **Fixed** Daemon exited on any WebSocket drop (every backend redeploy) instead of reconnecting — the reconnect timer was `unref`'d. It is now ref'd, so the daemon rides through deploys via exponential backoff.
+- **Changed** Remotion pinned to exactly 4.0.421 across renderer + bundler (was drifting to 4.0.452); the worker bundle is rebuilt from monorepo main (0600ac2).
+- **Fixed** The daemon no longer needs R2 credentials. It uploads results via backend-issued **presigned URLs** (`/api/upload/{video,image}/presign` → PUT) using only its `frm_` API key — so it runs on any end-user machine without distributing R2 secrets. Verified end-to-end against prod.
+
+
 ## 1.1.0
 
 - **Added** Auto-starting local render worker. `npx wyren-mcp` now logs you in
