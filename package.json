@@ -1,6 +1,6 @@
 {
   "name": "wyren-mcp",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Install the Wyren MCP server, agent skills, and auto-starting local render worker for Claude Code",
   "bin": {
     "wyren-mcp": "setup.mjs"

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.2
+
+- **Fixed** Caption renders failed on hosts that can't reach the media CDN directly — broken-IPv6 networks (WSL2, and some end-user machines), where the bundled ffmpeg core-dumps and Chromium `net::ERR_FAIL`s fetching the CDN even though Node's `fetch` reaches it fine. The worker now prefetches the source video — and any remote audio track — via Node `fetch` and serves them (with the trimmed segments) over one loopback HTTP server, so ffmpeg and Chromium/OffthreadVideo only read from `127.0.0.1`. The render then completes on any network. Rebuilt from monorepo main `df78a6b`. Verified end-to-end on a broken-IPv6 box (14 s chunked ~32 s; 8 s single-pass with muxed audio ~24 s).
+
+## 1.2.1
+
+- **Fixed** The daemon survives WebSocket drops (e.g. every backend redeploy) without losing in-flight work: it no longer aborts running jobs when the socket closes. Render, presigned upload, and completion run over the HTTP lifecycle independent of the socket, so jobs finish and report while the socket reconnects in the background. Only a real shutdown aborts in-flight work.
+
 ## 1.2.0
 
 - **Fixed** Caption (and slideshow) renders failed in the daemon: the vendored `remotion-bundle` was missing `bundle.js.map`, which Remotion's `prepareServer` reads — `sync-worker.mjs` was stripping ALL `.map` files. It now keeps the Remotion bundle maps (still drops the worker's debug map).

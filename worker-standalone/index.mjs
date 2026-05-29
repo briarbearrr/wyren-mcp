@@ -1,7 +1,7 @@
 import { createRequire } from 'module';
 import url, { fileURLToPath, URLSearchParams, URL as URL$1 } from 'url';
-import * as path8 from 'path';
-import path8__default, { dirname, join, extname } from 'path';
+import * as path28 from 'path';
+import path28__default, { dirname, join, extname } from 'path';
 import * as fs7 from 'fs';
 import fs7__default, { createWriteStream, chmodSync, accessSync, constants, statSync, existsSync, cpSync, promises, rmSync, readFileSync, mkdirSync, createReadStream, writeSync } from 'fs';
 import * as os3 from 'os';
@@ -14543,7 +14543,7 @@ var __export = (target, all) => {
 };
 var __require2 = /* @__PURE__ */ createRequire(import.meta.url);
 var ensureOutputDirectory = (outputLocation) => {
-  const dirName = path8__default.dirname(outputLocation);
+  const dirName = path28__default.dirname(outputLocation);
   if (!fs7__default.existsSync(dirName)) {
     fs7__default.mkdirSync(dirName, {
       recursive: true
@@ -14697,12 +14697,12 @@ var findClosestPackageJson = () => {
   let currentDir = process.cwd();
   let possiblePackageJson = "";
   for (let i = 0; i < recursionLimit; i++) {
-    possiblePackageJson = path8__default.join(currentDir, "package.json");
+    possiblePackageJson = path28__default.join(currentDir, "package.json");
     const exists = fs7__default.existsSync(possiblePackageJson);
     if (exists) {
       return possiblePackageJson;
     }
-    currentDir = path8__default.dirname(currentDir);
+    currentDir = path28__default.dirname(currentDir);
   }
   return null;
 };
@@ -14711,7 +14711,7 @@ var findRemotionRoot = () => {
   if (closestPackageJson === null) {
     return process.cwd();
   }
-  return path8__default.dirname(closestPackageJson);
+  return path28__default.dirname(closestPackageJson);
 };
 var isServeUrl = (potentialUrl) => {
   if (typeof potentialUrl === "undefined") {
@@ -14737,7 +14737,7 @@ var readyDirSync = (dir) => {
     return fs7__default.mkdirSync(dir, { recursive: true });
   }
   items.forEach((item) => {
-    item = path8__default.join(dir, item);
+    item = path28__default.join(dir, item);
     fs7__default.rmSync(item, { recursive: true, force: true });
   });
 };
@@ -14764,9 +14764,9 @@ var zipFolder = ({
 };
 var reproWriter = (name) => {
   const root = findRemotionRoot();
-  const reproFolder = path8__default.join(root, REPRO_DIR);
-  const logPath = path8__default.join(reproFolder, LOG_FILE_NAME);
-  const zipFile = path8__default.join(root, getZipFileName(name));
+  const reproFolder = path28__default.join(root, REPRO_DIR);
+  const logPath = path28__default.join(reproFolder, LOG_FILE_NAME);
+  const zipFile = path28__default.join(root, getZipFileName(name));
   readyDirSync(reproFolder);
   const reproLogWriteStream = fs7__default.createWriteStream(logPath, { flags: "a" });
   const serializeArgs = (args) => JSON.stringify(args);
@@ -14784,13 +14784,13 @@ var reproWriter = (name) => {
   }) => {
     const isServe = isServeUrl(serveUrl);
     if (!isServe) {
-      const inputDir = path8__default.resolve(reproFolder, INPUT_DIR);
+      const inputDir = path28__default.resolve(reproFolder, INPUT_DIR);
       readyDirSync(inputDir);
       fs7__default.cpSync(serveUrl, inputDir, { recursive: true });
     }
-    const serializedProps = path8__default.resolve(reproFolder, "input-props.json");
+    const serializedProps = path28__default.resolve(reproFolder, "input-props.json");
     fs7__default.writeFileSync(serializedProps, serializedInputPropsWithCustomSchema);
-    const serializedResolvedProps = path8__default.resolve(reproFolder, "resolved-props.json");
+    const serializedResolvedProps = path28__default.resolve(reproFolder, "resolved-props.json");
     fs7__default.writeFileSync(serializedResolvedProps, serializedResolvedPropsWithCustomSchema);
     writeLine("info", [`Args: ${JSON.stringify(process.argv)}`]);
     writeLine("info", [`Node/Bun version: ${process.version}`]);
@@ -14806,10 +14806,10 @@ var reproWriter = (name) => {
     return new Promise((resolve3, reject) => {
       try {
         if (output) {
-          const outputDir = path8__default.resolve(reproFolder, OUTPUT_DIR);
+          const outputDir = path28__default.resolve(reproFolder, OUTPUT_DIR);
           readyDirSync(outputDir);
-          const fileName = path8__default.basename(output);
-          const targetPath = path8__default.join(outputDir, fileName);
+          const fileName = path28__default.basename(output);
+          const targetPath = path28__default.join(outputDir, fileName);
           fs7__default.copyFileSync(output, targetPath);
         }
         disableRepro();
@@ -18284,19 +18284,19 @@ var getExecutablePath = ({
   switch (type) {
     case "compositor":
       if (process.platform === "win32") {
-        return path8__default.resolve(base, "remotion.exe");
+        return path28__default.resolve(base, "remotion.exe");
       }
-      return path8__default.resolve(base, "remotion");
+      return path28__default.resolve(base, "remotion");
     case "ffmpeg":
       if (process.platform === "win32") {
-        return path8__default.join(base, "ffmpeg.exe");
+        return path28__default.join(base, "ffmpeg.exe");
       }
-      return path8__default.join(base, "ffmpeg");
+      return path28__default.join(base, "ffmpeg");
     case "ffprobe":
       if (process.platform === "win32") {
-        return path8__default.join(base, "ffprobe.exe");
+        return path28__default.join(base, "ffprobe.exe");
       }
-      return path8__default.join(base, "ffprobe");
+      return path28__default.join(base, "ffprobe");
     default:
       throw new Error(`Unknown executable type: ${type}`);
   }
@@ -18394,7 +18394,7 @@ var callFf = ({
     binariesDirectory
   });
   makeFileExecutableIfItIsNot(executablePath);
-  const cwd = path8__default.dirname(executablePath);
+  const cwd = path28__default.dirname(executablePath);
   const task = (0, import_execa2.default)(executablePath, args.filter(truthy2), {
     cwd,
     env: getExplicitEnv(cwd),
@@ -18421,7 +18421,7 @@ var callFfNative = ({
     binariesDirectory
   });
   makeFileExecutableIfItIsNot(executablePath);
-  const cwd = path8__default.dirname(executablePath);
+  const cwd = path28__default.dirname(executablePath);
   const task = spawn(executablePath, args.filter(truthy2), {
     cwd,
     env: getExplicitEnv(cwd),
@@ -18574,7 +18574,7 @@ var getSourceMap = (filePath, fileContents, type) => {
     }
   }
   {
-    const newFilePath = path8__default.join(path8__default.dirname(filePath), sm);
+    const newFilePath = path28__default.join(path28__default.dirname(filePath), sm);
     return Promise.resolve(new import_source_map.SourceMapConsumer(readFileSync(newFilePath, "utf8")));
   }
 };
@@ -19026,12 +19026,12 @@ var getDownloadsCacheDir = () => {
   let dir = cwd;
   for (; ; ) {
     try {
-      if (fs7__default.statSync(path8__default.join(dir, "package.json")).isFile()) {
+      if (fs7__default.statSync(path28__default.join(dir, "package.json")).isFile()) {
         break;
       }
     } catch (e) {
     }
-    const parent = path8__default.dirname(dir);
+    const parent = path28__default.dirname(dir);
     if (dir === parent) {
       dir = void 0;
       break;
@@ -19039,15 +19039,15 @@ var getDownloadsCacheDir = () => {
     dir = parent;
   }
   if (!dir) {
-    return path8__default.resolve(cwd, ".remotion");
+    return path28__default.resolve(cwd, ".remotion");
   }
   if (process.versions.pnp === "1") {
-    return path8__default.resolve(dir, ".pnp/.remotion");
+    return path28__default.resolve(dir, ".pnp/.remotion");
   }
   if (process.versions.pnp === "3") {
-    return path8__default.resolve(dir, ".yarn/.remotion");
+    return path28__default.resolve(dir, ".yarn/.remotion");
   }
-  return path8__default.resolve(dir, "node_modules/.remotion");
+  return path28__default.resolve(dir, "node_modules/.remotion");
 };
 var mkdirAsync = fs7.promises.mkdir;
 var unlinkAsync = promisify(fs7.unlink.bind(fs7));
@@ -19073,11 +19073,11 @@ var getPlatform = () => {
 };
 var getDownloadsFolder = (chromeMode) => {
   const destination = chromeMode === "headless-shell" ? "chrome-headless-shell" : "chrome-for-testing";
-  return path8.join(getDownloadsCacheDir(), destination);
+  return path28.join(getDownloadsCacheDir(), destination);
 };
 var getVersionFilePath = (chromeMode) => {
   const downloadsFolder = getDownloadsFolder(chromeMode);
-  return path8.join(downloadsFolder, "VERSION");
+  return path28.join(downloadsFolder, "VERSION");
 };
 var getExpectedVersion = (version, _chromeMode) => {
   if (version) {
@@ -19111,7 +19111,7 @@ var downloadBrowser = async ({
     throw new Error(`A malformed download URL was found: ${downloadURL}.`);
   }
   const downloadsFolder = getDownloadsFolder(chromeMode);
-  const archivePath = path8.join(downloadsFolder, fileName);
+  const archivePath = path28.join(downloadsFolder, fileName);
   const outputPath = getFolderPath(downloadsFolder, platform3);
   const expectedVersion = getExpectedVersion(version);
   if (await existsAsync(outputPath)) {
@@ -19160,14 +19160,14 @@ var downloadBrowser = async ({
       "chromium-headless-shell-amazon-linux2023-x64"
     ];
     for (const subdir of possibleSubdirs) {
-      const chromeLinuxFolder = path8.join(outputPath, subdir);
-      const chromePath = path8.join(chromeLinuxFolder, "chrome");
+      const chromeLinuxFolder = path28.join(outputPath, subdir);
+      const chromePath = path28.join(chromeLinuxFolder, "chrome");
       if (fs7.existsSync(chromePath)) {
-        const chromeHeadlessShellPath = path8.join(chromeLinuxFolder, "chrome-headless-shell");
+        const chromeHeadlessShellPath = path28.join(chromeLinuxFolder, "chrome-headless-shell");
         fs7.renameSync(chromePath, chromeHeadlessShellPath);
       }
       if (fs7.existsSync(chromeLinuxFolder)) {
-        const targetFolder = path8.join(outputPath, "chrome-headless-shell-" + platform3);
+        const targetFolder = path28.join(outputPath, "chrome-headless-shell-" + platform3);
         if (chromeLinuxFolder !== targetFolder) {
           fs7.renameSync(chromeLinuxFolder, targetFolder);
         }
@@ -19186,7 +19186,7 @@ var downloadBrowser = async ({
   return revisionInfo;
 };
 var getFolderPath = (downloadsFolder, platform3) => {
-  return path8.resolve(downloadsFolder, platform3);
+  return path28.resolve(downloadsFolder, platform3);
 };
 var getExecutablePath2 = (chromeMode) => {
   const downloadsFolder = getDownloadsFolder(chromeMode);
@@ -19194,18 +19194,18 @@ var getExecutablePath2 = (chromeMode) => {
   const folderPath = getFolderPath(downloadsFolder, platform3);
   if (chromeMode === "chrome-for-testing") {
     if (platform3 === "mac-arm64" || platform3 === "mac-x64") {
-      return path8.join(folderPath, `chrome-${platform3}`, "Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing");
+      return path28.join(folderPath, `chrome-${platform3}`, "Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing");
     }
     if (platform3 === "win64") {
-      return path8.join(folderPath, "chrome-win64", "chrome.exe");
+      return path28.join(folderPath, "chrome-win64", "chrome.exe");
     }
     if (platform3 === "linux64" || platform3 === "linux-arm64") {
-      return path8.join(folderPath, "chrome-linux64", "chrome");
+      return path28.join(folderPath, "chrome-linux64", "chrome");
     }
     throw new Error("unsupported platform" + platform3);
   }
   if (chromeMode === "headless-shell") {
-    return path8.join(folderPath, `chrome-headless-shell-${platform3}`, platform3 === "win64" ? "chrome-headless-shell.exe" : platform3 === "linux-arm64" || isAmazonLinux2023() ? "headless_shell" : "chrome-headless-shell");
+    return path28.join(folderPath, `chrome-headless-shell-${platform3}`, platform3 === "win64" ? "chrome-headless-shell.exe" : platform3 === "linux-arm64" || isAmazonLinux2023() ? "headless_shell" : "chrome-headless-shell");
   }
   throw new Error("unsupported chrome mode" + chromeMode);
 };
@@ -19559,7 +19559,7 @@ var internalOpenBrowser = async ({
   if (chromiumOptions.userAgent) {
     Log.verbose({ indent, logLevel, tag: "openBrowser()" }, `Using custom user agent: ${chromiumOptions.userAgent}`);
   }
-  const userDataDir = await fs7__default.promises.mkdtemp(path8__default.join(os3__default.tmpdir(), "puppeteer_dev_chrome_profile-"));
+  const userDataDir = await fs7__default.promises.mkdtemp(path28__default.join(os3__default.tmpdir(), "puppeteer_dev_chrome_profile-"));
   const browserInstance = await launchChrome({
     executablePath,
     logLevel,
@@ -28610,7 +28610,7 @@ var sanitizeFilename = (input) => {
 };
 var pathSeparators = /[/\\]/;
 var sanitizeFilePath = (pathToSanitize) => {
-  return pathToSanitize.split(pathSeparators).map((s) => sanitizeFilename(s)).join(path8__default.sep);
+  return pathToSanitize.split(pathSeparators).map((s) => sanitizeFilename(s)).join(path28__default.sep);
 };
 var waitForAssetToBeDownloaded = ({
   src,
@@ -28840,7 +28840,7 @@ var getSanitizedFilenameForAssetUrl = ({
   const fileExtension = split.length > 1 && split[split.length - 1] ? `.${split[split.length - 1]}` : "";
   const hashedFileName = String(random(`${src}${pathname}${search}`)).replace("0.", "");
   const filename = hashedFileName + fileExtension;
-  return path8__default.join(downloadDir, sanitizeFilePath(filename));
+  return path28__default.join(downloadDir, sanitizeFilePath(filename));
 };
 var downloadAndMapAssetsToFileUrl = async ({
   renderAsset,
@@ -28933,7 +28933,7 @@ var startCompositor = ({
   });
   makeFileExecutableIfItIsNot(bin);
   const fullCommand = serializeCommand(type, payload);
-  const cwd = path8__default.dirname(bin);
+  const cwd = path28__default.dirname(bin);
   const child = spawn(bin, [JSON.stringify(fullCommand)], {
     cwd,
     env: process.platform === "darwin" ? {
@@ -29294,7 +29294,7 @@ var randomHash = () => {
   }).join("");
 };
 var tmpDir = (str) => {
-  const newDir = path8__default.join(os3__default.tmpdir(), str + randomHash());
+  const newDir = path28__default.join(os3__default.tmpdir(), str + randomHash());
   if (fs7__default.existsSync(newDir)) {
     fs7__default.rmSync(newDir, {
       recursive: true,
@@ -29379,7 +29379,7 @@ var makeInlineAudioMixing = (dir) => {
     return Object.keys(openFiles);
   };
   const getFilePath = (asset) => {
-    return path8__default.join(folderToAdd, `${asset.id}.wav`);
+    return path28__default.join(folderToAdd, `${asset.id}.wav`);
   };
   const ensureAsset = ({
     asset,
@@ -29480,7 +29480,7 @@ var makeInlineAudioMixing = (dir) => {
   };
 };
 var makeAndReturn = (dir, name) => {
-  const p = path8__default.join(dir, name);
+  const p = path28__default.join(dir, name);
   mkdirSync(p);
   return p;
 };
@@ -29536,7 +29536,7 @@ var map = (webpackBundleOrServeUrl, suffix) => {
     }
     return parsed.origin + parsed.pathname.substring(0, idx + 1) + suffix;
   }
-  const index = webpackBundleOrServeUrl.lastIndexOf(path8__default.sep);
+  const index = webpackBundleOrServeUrl.lastIndexOf(path28__default.sep);
   const url2 = webpackBundleOrServeUrl.substring(0, index + 1) + suffix;
   return url2;
 };
@@ -29778,10 +29778,10 @@ var isPathInside = function(thePath, potentialParent) {
     thePath = thePath.toLowerCase();
     potentialParent = potentialParent.toLowerCase();
   }
-  return thePath.lastIndexOf(potentialParent, 0) === 0 && (thePath[potentialParent.length] === path8__default.sep || thePath[potentialParent.length] === void 0);
+  return thePath.lastIndexOf(potentialParent, 0) === 0 && (thePath[potentialParent.length] === path28__default.sep || thePath[potentialParent.length] === void 0);
 };
 function stripTrailingSep(thePath) {
-  if (thePath[thePath.length - 1] === path8__default.sep) {
+  if (thePath[thePath.length - 1] === path28__default.sep) {
     return thePath.slice(0, -1);
   }
   return thePath;
@@ -29824,7 +29824,7 @@ var rangeParser = (size, str) => {
   return { ranges, type };
 };
 var getHeaders = (absolutePath, stats) => {
-  const { base } = path8__default.parse(absolutePath);
+  const { base } = path28__default.parse(absolutePath);
   let defaultHeaders = {};
   if (stats) {
     defaultHeaders = {
@@ -29840,15 +29840,15 @@ var getHeaders = (absolutePath, stats) => {
   return defaultHeaders;
 };
 var getPossiblePaths = (relativePath, extension2) => [
-  path8__default.join(relativePath, `index${extension2}`),
+  path28__default.join(relativePath, `index${extension2}`),
   relativePath.endsWith("/") ? relativePath.replace(/\/$/g, extension2) : relativePath + extension2
-].filter((item) => path8__default.basename(item) !== extension2);
+].filter((item) => path28__default.basename(item) !== extension2);
 var findRelated = async (current, relativePath) => {
   const possible = getPossiblePaths(relativePath, ".html");
   let stats = null;
   for (let index = 0; index < possible.length; index++) {
     const related = possible[index];
-    const absolutePath = path8__default.join(current, related);
+    const absolutePath = path28__default.join(current, related);
     try {
       stats = await promises.lstat(absolutePath);
     } catch (err) {
@@ -29882,7 +29882,7 @@ var internalError = (absolutePath, response) => {
 };
 var serveHandler = async (request, response, config) => {
   const cwd = process.cwd();
-  const current = path8__default.resolve(cwd, config.public);
+  const current = path28__default.resolve(cwd, config.public);
   let relativePath = null;
   try {
     const parsedUrl = new URL(request.url, `http://${request.headers.host}`);
@@ -29893,7 +29893,7 @@ var serveHandler = async (request, response, config) => {
       message: "Bad Request"
     });
   }
-  let absolutePath = path8__default.join(current, relativePath);
+  let absolutePath = path28__default.join(current, relativePath);
   if (!isPathInside(absolutePath, current)) {
     return sendError(absolutePath, response, {
       statusCode: 400,
@@ -29901,7 +29901,7 @@ var serveHandler = async (request, response, config) => {
     });
   }
   let stats = null;
-  if (path8__default.extname(relativePath) !== "") {
+  if (path28__default.extname(relativePath) !== "") {
     try {
       stats = await promises.lstat(absolutePath);
     } catch (err) {
@@ -30142,13 +30142,13 @@ var prepareServer = async ({
       downloadMap
     });
   }
-  const indexFile = path8__default.join(webpackConfigOrServeUrl, "index.html");
+  const indexFile = path28__default.join(webpackConfigOrServeUrl, "index.html");
   const exists = existsSync(indexFile);
   if (!exists) {
     throw new Error(`Tried to serve the Webpack bundle on a HTTP server, but the file ${indexFile} does not exist. Is this a valid path to a Webpack bundle?`);
   }
   let localSourceMap = null;
-  getSourceMapFromLocalFile(path8__default.join(webpackConfigOrServeUrl, NoReactInternals.bundleName)).then((s) => {
+  getSourceMapFromLocalFile(path28__default.join(webpackConfigOrServeUrl, NoReactInternals.bundleName)).then((s) => {
     localSourceMap = s;
   }).catch((err) => {
     Log.verbose({ indent, logLevel }, "Could not fetch sourcemap for ", webpackConfigOrServeUrl, err);
@@ -31944,7 +31944,7 @@ var renderFrameWithOptionToReject = async ({
       freePage: page,
       height,
       imageFormat: assetsOnly ? "none" : imageFormat,
-      output: index === null ? null : path8__default.join(frameDir, getFrameOutputFileName({
+      output: index === null ? null : path28__default.join(frameDir, getFrameOutputFileName({
         frame,
         imageFormat,
         index,
@@ -32550,7 +32550,7 @@ var innerRenderFrames = async ({
       assets: assets.sort((a, b) => {
         return a.frame - b.frame;
       }),
-      imageSequenceName: path8__default.join(frameDir, imageSequenceName),
+      imageSequenceName: path28__default.join(frameDir, imageSequenceName),
       firstFrameIndex,
       downloadMap,
       trimLeftOffset,
@@ -33551,7 +33551,7 @@ var makeFfmpegFilterFile = (complexFilter, downloadMap) => {
 };
 var makeFfmpegFilterFileStr = async (complexFilter, downloadMap) => {
   const random2 = Math.random().toString().replace(".", "");
-  const filterFile = path8__default.join(downloadMap.complexFilter, "complex-filter-" + random2 + ".txt");
+  const filterFile = path28__default.join(downloadMap.complexFilter, "complex-filter-" + random2 + ".txt");
   if (!existsSync(downloadMap.complexFilter)) {
     fs7__default.mkdirSync(downloadMap.complexFilter, { recursive: true });
   }
@@ -33652,7 +33652,7 @@ var mergeAudioTrackUnlimited = async ({
         onProgress(combinedProgress);
       };
       const chunkNames = await Promise.all(chunked.map(async (chunkFiles, i) => {
-        const chunkOutname = path8__default.join(tempPath, `chunk-${i}.wav`);
+        const chunkOutname = path28__default.join(tempPath, `chunk-${i}.wav`);
         await mergeAudioTrack({
           files: chunkFiles,
           chunkLengthInSeconds,
@@ -34094,7 +34094,7 @@ var createAudio = async ({
     onProgress(totalProgress);
   };
   const audioTracks = await Promise.all(assetPositions.map(async (asset, index) => {
-    const filterFile = path8__default.join(downloadMap.audioMixing, `${index}.wav`);
+    const filterFile = path28__default.join(downloadMap.audioMixing, `${index}.wav`);
     const result = await preprocessAudioTrack({
       outName: filterFile,
       asset,
@@ -34136,9 +34136,9 @@ var createAudio = async ({
       }
     }))
   ];
-  const merged = path8__default.join(downloadMap.audioPreprocessing, "merged.wav");
+  const merged = path28__default.join(downloadMap.audioPreprocessing, "merged.wav");
   const extension2 = getExtensionFromAudioCodec(audioCodec);
-  const outName = path8__default.join(downloadMap.audioPreprocessing, `audio.${extension2}`);
+  const outName = path28__default.join(downloadMap.audioPreprocessing, `audio.${extension2}`);
   await mergeAudioTrack({
     files: preprocessed,
     outName: merged,
@@ -34305,7 +34305,7 @@ var innerStitchFramesToVideo = async ({
     setting: audioCodecSetting,
     separateAudioTo
   });
-  const tempFile = outputLocation ? null : path8__default.join(assetsInfo.downloadMap.stitchFrames, `out.${getFileExtensionFromCodec(codec, resolvedAudioCodec)}`);
+  const tempFile = outputLocation ? null : path28__default.join(assetsInfo.downloadMap.stitchFrames, `out.${getFileExtensionFromCodec(codec, resolvedAudioCodec)}`);
   Log.verbose({
     indent,
     logLevel,
@@ -34379,7 +34379,7 @@ var innerStitchFramesToVideo = async ({
     }
     cpSync(audio, outputLocation ?? tempFile);
     onProgress?.(Math.round(assetsInfo.chunkLengthInSeconds * fps));
-    deleteDirectory(path8__default.dirname(audio));
+    deleteDirectory(path28__default.dirname(audio));
     const file = await new Promise((resolve22, reject) => {
       if (tempFile) {
         promises.readFile(tempFile).then((f) => {
@@ -34468,7 +34468,7 @@ var innerStitchFramesToVideo = async ({
     if (!audio) {
       throw new Error(`\`separateAudioTo\` was set to ${JSON.stringify(separateAudioTo)}, but this render included no audio`);
     }
-    const finalDestination = path8__default.resolve(remotionRoot, separateAudioTo);
+    const finalDestination = path28__default.resolve(remotionRoot, separateAudioTo);
     cpSync(audio, finalDestination);
     rmSync(audio);
   }
@@ -34716,7 +34716,7 @@ var internalRenderMediaRaw = ({
       separateAudioTo
     });
   }
-  const absoluteOutputLocation = outputLocation ? path8__default.resolve(process.cwd(), outputLocation) : null;
+  const absoluteOutputLocation = outputLocation ? path28__default.resolve(process.cwd(), outputLocation) : null;
   validateScale(scale);
   validateFfmpegOverride(ffmpegOverride);
   validateEveryNthFrame(everyNthFrame);
@@ -34782,8 +34782,8 @@ var internalRenderMediaRaw = ({
   }
   const imageFormat = isAudioCodec(codec) ? "none" : provisionalImageFormat ?? compositionWithPossibleUnevenDimensions.defaultVideoImageFormat ?? DEFAULT_VIDEO_IMAGE_FORMAT;
   validateSelectedPixelFormatAndImageFormatCombination(pixelFormat, imageFormat);
-  const workingDir = fs7__default.mkdtempSync(path8__default.join(os3__default.tmpdir(), "react-motion-render"));
-  const preEncodedFileLocation = parallelEncoding ? path8__default.join(workingDir, "pre-encode." + getFileExtensionFromCodec(codec, audioCodec)) : null;
+  const workingDir = fs7__default.mkdtempSync(path28__default.join(os3__default.tmpdir(), "react-motion-render"));
+  const preEncodedFileLocation = parallelEncoding ? path28__default.join(workingDir, "pre-encode." + getFileExtensionFromCodec(codec, audioCodec)) : null;
   if (onCtrlCExit && workingDir) {
     onCtrlCExit(`Delete ${workingDir}`, () => deleteDirectory(workingDir));
   }
@@ -35109,7 +35109,7 @@ var internalRenderMediaRaw = ({
       reject(err);
     }).finally(() => {
       if (preEncodedFileLocation !== null && fs7__default.existsSync(preEncodedFileLocation)) {
-        deleteDirectory(path8__default.dirname(preEncodedFileLocation));
+        deleteDirectory(path28__default.dirname(preEncodedFileLocation));
       }
       if (workingDir && fs7__default.existsSync(workingDir)) {
         deleteDirectory(workingDir);
@@ -36034,13 +36034,13 @@ async function renderSinglePass(opts, progressBase = 0, progressSpan = 0.95) {
     jobId,
     signal,
     tmpDir: tmpDir2,
-    videoUrl,
+    sourceServedUrl,
     captionConfig,
     concurrency,
     onProgress,
     logger
   } = opts;
-  const inputProps = { ...captionConfig, videoUrl };
+  const inputProps = { ...captionConfig, videoUrl: sourceServedUrl };
   const selectStart = Date.now();
   const composition = await selectComposition({
     serveUrl: bundlePath,
@@ -36049,7 +36049,7 @@ async function renderSinglePass(opts, progressBase = 0, progressSpan = 0.95) {
     timeoutInMilliseconds: 12e4
   });
   logger.info("Single-pass composition selected", { jobId, selectMs: Date.now() - selectStart });
-  const outputLocation = path8__default.join(tmpDir2, "output.mp4");
+  const outputLocation = path28__default.join(tmpDir2, "output.mp4");
   const { cancelSignal, cancel } = makeCancelSignal();
   signal.addEventListener("abort", () => cancel(), { once: true });
   const renderStart = Date.now();
@@ -36082,6 +36082,27 @@ async function renderSinglePass(opts, progressBase = 0, progressSpan = 0.95) {
   });
   return outputLocation;
 }
+function contentTypeFor(name) {
+  switch (path28__default.extname(name).toLowerCase()) {
+    case ".mp4":
+    case ".m4v":
+      return "video/mp4";
+    case ".webm":
+      return "video/webm";
+    case ".mp3":
+      return "audio/mpeg";
+    case ".m4a":
+      return "audio/mp4";
+    case ".wav":
+      return "audio/wav";
+    case ".aac":
+      return "audio/aac";
+    case ".ogg":
+      return "audio/ogg";
+    default:
+      return "application/octet-stream";
+  }
+}
 function startLocalFileServer(dir) {
   const server = http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -36092,15 +36113,15 @@ function startLocalFileServer(dir) {
       res.end();
       return;
     }
-    const name = path8__default.basename(decodeURIComponent((req.url ?? "/").split("?")[0] ?? "/"));
-    const filePath = path8__default.join(dir, name);
+    const name = path28__default.basename(decodeURIComponent((req.url ?? "/").split("?")[0] ?? "/"));
+    const filePath = path28__default.join(dir, name);
     if (!name || !fs7__default.existsSync(filePath)) {
       res.statusCode = 404;
       res.end();
       return;
     }
     const { size } = fs7__default.statSync(filePath);
-    res.setHeader("Content-Type", "video/mp4");
+    res.setHeader("Content-Type", contentTypeFor(name));
     res.setHeader("Accept-Ranges", "bytes");
     const range = req.headers.range;
     if (range) {
@@ -36132,7 +36153,8 @@ async function renderChunked(opts, totalSeconds) {
     jobId,
     signal,
     tmpDir: tmpDir2,
-    videoUrl,
+    sourceLocalPath,
+    fileServerOrigin,
     captionConfig,
     concurrency,
     onProgress,
@@ -36142,8 +36164,6 @@ async function renderChunked(opts, totalSeconds) {
   const segmentCount = Math.ceil(totalSeconds / SEGMENT_SECONDS);
   const segmentPaths = new Array(segmentCount);
   const parallel = resolveSegmentConcurrency(segmentCount);
-  const fileServer = await startLocalFileServer(tmpDir2);
-  const fileServerOrigin = fileServer.origin;
   logger.info("Rendering captions in chunks", {
     jobId,
     totalSeconds,
@@ -36156,7 +36176,7 @@ async function renderChunked(opts, totalSeconds) {
     const startSec = i * SEGMENT_SECONDS;
     const endSec = Math.min(startSec + SEGMENT_SECONDS, totalSeconds);
     const segDurationSec = endSec - startSec;
-    const trimmedSrc = path8__default.join(tmpDir2, `src-seg-${i}.mp4`);
+    const trimmedSrc = path28__default.join(tmpDir2, `src-seg-${i}.mp4`);
     await runFFmpeg(
       [
         "-y",
@@ -36165,7 +36185,7 @@ async function renderChunked(opts, totalSeconds) {
         "-ss",
         startSec.toFixed(3),
         "-i",
-        videoUrl,
+        sourceLocalPath,
         "-t",
         segDurationSec.toFixed(3),
         "-c",
@@ -36189,7 +36209,7 @@ async function renderChunked(opts, totalSeconds) {
       ...captionConfig,
       // Served over loopback HTTP (not file://) — Chromium/OffthreadVideo can't
       // load file:// segments (fails on WSL2 and in the compositor).
-      videoUrl: `${fileServerOrigin}/${path8__default.basename(trimmedSrc)}`,
+      videoUrl: `${fileServerOrigin}/${path28__default.basename(trimmedSrc)}`,
       words: segmentWords,
       durationInFrames: Math.max(1, Math.ceil(segDurationSec * CAPTION_FPS))
     };
@@ -36199,7 +36219,7 @@ async function renderChunked(opts, totalSeconds) {
       inputProps: segmentInputProps,
       timeoutInMilliseconds: 6e4
     });
-    const segOut = path8__default.join(tmpDir2, `cap-seg-${i}.mp4`);
+    const segOut = path28__default.join(tmpDir2, `cap-seg-${i}.mp4`);
     const { cancelSignal, cancel } = makeCancelSignal();
     const onAbort = () => cancel();
     signal.addEventListener("abort", onAbort, { once: true });
@@ -36240,17 +36260,13 @@ async function renderChunked(opts, totalSeconds) {
       logger.info("Caption chunk render done", { jobId, chunkIdx: i, completed, segmentCount });
     }
   };
-  try {
-    await Promise.all(Array.from({ length: Math.min(parallel, segmentCount) }, () => worker()));
-  } finally {
-    await fileServer.close();
-  }
-  const concatListPath = path8__default.join(tmpDir2, "concat.txt");
+  await Promise.all(Array.from({ length: Math.min(parallel, segmentCount) }, () => worker()));
+  const concatListPath = path28__default.join(tmpDir2, "concat.txt");
   fs7__default.writeFileSync(
     concatListPath,
     segmentPaths.map((p) => `file '${p.replace(/'/g, "'\\''")}'`).join("\n")
   );
-  const finalOutput = path8__default.join(tmpDir2, "output.mp4");
+  const finalOutput = path28__default.join(tmpDir2, "output.mp4");
   await runFFmpeg(buildConcatDemuxerCommand(concatListPath, finalOutput), {
     signal,
     timeoutMs: 6e4
@@ -36274,20 +36290,42 @@ async function renderCaptions(input) {
     chunked,
     videoUrl: input.videoUrl
   });
-  const chunkInputs = {
-    bundlePath: input.bundlePath,
-    jobId: input.jobId,
-    signal: input.cancelSignal,
-    tmpDir: input.workDir,
-    videoUrl: input.videoUrl,
-    captionConfig: input.captionConfig,
-    concurrency: input.concurrency,
-    logger,
-    ...input.onProgress ? { onProgress: input.onProgress } : {}
-  };
-  const outputFilePath = chunked ? await renderChunked(chunkInputs, totalSeconds) : await renderSinglePass(chunkInputs);
-  const durationSec = Math.round(rawFrames / CAPTION_FPS * 10) / 10;
-  return { outputFilePath, durationSec };
+  const fileServer = await startLocalFileServer(input.workDir);
+  try {
+    const sourceLocalPath = path28__default.join(input.workDir, "source.mp4");
+    if (/^https?:\/\//i.test(input.videoUrl)) {
+      await downloadToFile(input.videoUrl, sourceLocalPath);
+    } else {
+      fs7__default.copyFileSync(input.videoUrl, sourceLocalPath);
+    }
+    const sourceServedUrl = `${fileServer.origin}/${path28__default.basename(sourceLocalPath)}`;
+    const captionConfig = { ...input.captionConfig };
+    const audioUrl = captionConfig.audioUrl;
+    if (typeof audioUrl === "string" && /^https?:\/\//i.test(audioUrl)) {
+      const audioExt = path28__default.extname(new URL(audioUrl).pathname) || ".mp3";
+      const audioLocalName = `source-audio${audioExt}`;
+      await downloadToFile(audioUrl, path28__default.join(input.workDir, audioLocalName));
+      captionConfig.audioUrl = `${fileServer.origin}/${audioLocalName}`;
+    }
+    const chunkInputs = {
+      bundlePath: input.bundlePath,
+      jobId: input.jobId,
+      signal: input.cancelSignal,
+      tmpDir: input.workDir,
+      sourceLocalPath,
+      sourceServedUrl,
+      fileServerOrigin: fileServer.origin,
+      captionConfig,
+      concurrency: input.concurrency,
+      logger,
+      ...input.onProgress ? { onProgress: input.onProgress } : {}
+    };
+    const outputFilePath = chunked ? await renderChunked(chunkInputs, totalSeconds) : await renderSinglePass(chunkInputs);
+    const durationSec = Math.round(rawFrames / CAPTION_FPS * 10) / 10;
+    return { outputFilePath, durationSec };
+  } finally {
+    await fileServer.close();
+  }
 }
 var SLIDESHOW_FPS = 30;
 var NOOP_LOGGER2 = {
@@ -36325,7 +36363,7 @@ async function renderSlideshow(input) {
     inputProps,
     timeoutInMilliseconds: 12e4
   });
-  const outputLocation = path8__default.join(input.workDir, "output.mp4");
+  const outputLocation = path28__default.join(input.workDir, "output.mp4");
   const { cancelSignal, cancel } = makeCancelSignal();
   input.cancelSignal.addEventListener("abort", () => cancel(), { once: true });
   const renderStart = Date.now();
@@ -37205,16 +37243,16 @@ var CAPABILITIES = [
 var HEARTBEAT_INTERVAL_MS = 15e3;
 var RECONNECT_BASE_MS = 1e3;
 var RECONNECT_MAX_MS = 3e4;
-var ENTRY_POINT = path8__default.resolve(process.cwd(), "remotion/Root.tsx");
+var ENTRY_POINT = path28__default.resolve(process.cwd(), "remotion/Root.tsx");
 function resolvePrebuiltBundleDir() {
   const override = process.env.WYREN_REMOTION_BUNDLE_DIR?.trim();
-  if (override) return path8__default.resolve(override);
-  const moduleDir = path8__default.dirname(fileURLToPath(import.meta.url));
-  const installRelative = path8__default.join(moduleDir, "remotion-bundle");
-  if (fs7__default.existsSync(path8__default.join(installRelative, "index.html"))) {
+  if (override) return path28__default.resolve(override);
+  const moduleDir = path28__default.dirname(fileURLToPath(import.meta.url));
+  const installRelative = path28__default.join(moduleDir, "remotion-bundle");
+  if (fs7__default.existsSync(path28__default.join(installRelative, "index.html"))) {
     return installRelative;
   }
-  return path8__default.resolve(process.cwd(), "backend/dist/remotion-bundle");
+  return path28__default.resolve(process.cwd(), "backend/dist/remotion-bundle");
 }
 var PREBUILT_BUNDLE_DIR = resolvePrebuiltBundleDir();
 function log(msg, ctx) {
@@ -37240,7 +37278,7 @@ function wsUrlFor(backendUrl) {
 var cachedBundlePath = null;
 async function resolveBundle() {
   if (cachedBundlePath) return cachedBundlePath;
-  const prebuiltIndex = path8__default.join(PREBUILT_BUNDLE_DIR, "index.html");
+  const prebuiltIndex = path28__default.join(PREBUILT_BUNDLE_DIR, "index.html");
   if (fs7__default.existsSync(prebuiltIndex)) {
     log("Using pre-built Remotion bundle", { dir: PREBUILT_BUNDLE_DIR });
     cachedBundlePath = PREBUILT_BUNDLE_DIR;
@@ -37303,7 +37341,7 @@ var BackendClient = class {
   async uploadViaPresign(localPath, endpoint, contentType, purpose) {
     const size = fs7__default.statSync(localPath).size;
     const body = {
-      filename: path8__default.basename(localPath),
+      filename: path28__default.basename(localPath),
       contentType,
       size
     };
@@ -37435,7 +37473,7 @@ var videoMergeHandler = async (ctx) => {
   for (let i = 0; i < videoUrls.length; i++) {
     const url2 = videoUrls[i];
     await validateExternalUrl(url2);
-    const filePath = path8__default.join(ctx.workDir, `input${i}.mp4`);
+    const filePath = path28__default.join(ctx.workDir, `input${i}.mp4`);
     await downloadToFile(url2, filePath);
     inputPaths.push(filePath);
   }
@@ -37467,13 +37505,13 @@ var brainrotComposeHandler = async (ctx) => {
     throw new Error("brainrot-compose requires at least one video URL");
   }
   await validateExternalUrl(config.audioUrl);
-  const audioPath = path8__default.join(ctx.workDir, "voiceover.audio");
+  const audioPath = path28__default.join(ctx.workDir, "voiceover.audio");
   await downloadToFile(config.audioUrl, audioPath);
   const inputPaths = [];
   for (let i = 0; i < config.videoUrls.length; i++) {
     const url2 = config.videoUrls[i];
     await validateExternalUrl(url2);
-    const filePath = path8__default.join(ctx.workDir, `clip-${i}.mp4`);
+    const filePath = path28__default.join(ctx.workDir, `clip-${i}.mp4`);
     await downloadToFile(url2, filePath);
     inputPaths.push(filePath);
   }
@@ -37515,7 +37553,7 @@ async function runJob(socket, client, jobType, jobId, concurrency, cancelSignal)
   const userId = job.user_id;
   if (!userId) throw new Error(`Job ${jobId} has no user_id`);
   await client.markProcessing(jobId);
-  const workDir = fs7__default.mkdtempSync(path8__default.join(os3__default.tmpdir(), `wyren-daemon-${jobId}-`));
+  const workDir = fs7__default.mkdtempSync(path28__default.join(os3__default.tmpdir(), `wyren-daemon-${jobId}-`));
   try {
     await handler5({ socket, client, jobId, userId, job, concurrency, cancelSignal, workDir });
     log("Job completed", { jobType, jobId });
