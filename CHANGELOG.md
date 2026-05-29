@@ -6,7 +6,7 @@
 - **Fixed** Chunked captions served trimmed segments over `file://`, which Chromium refuses (fails on WSL2; OffthreadVideo is http-only). Segments are now served over a loopback HTTP server (Range + CORS).
 - **Fixed** Daemon exited on any WebSocket drop (every backend redeploy) instead of reconnecting — the reconnect timer was `unref`'d. It is now ref'd, so the daemon rides through deploys via exponential backoff.
 - **Changed** Remotion pinned to exactly 4.0.421 across renderer + bundler (was drifting to 4.0.452); the worker bundle is rebuilt from monorepo main (a3edc51).
-- **Note** The daemon uploads results to R2 directly and requires R2 env (`R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ACCOUNT_ID`, `R2_BUCKET_NAME`, `R2_PUBLIC_URL`) in its environment.
+- **Fixed** The daemon no longer needs R2 credentials. It uploads results via backend-issued **presigned URLs** ( → PUT) using only its  API key — so it runs on any end-user machine without distributing R2 secrets. Verified end-to-end against prod.
 
 
 ## 1.1.0
