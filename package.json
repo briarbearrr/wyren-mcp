@@ -1,21 +1,43 @@
 {
   "name": "wyren-mcp",
-  "version": "1.0.0",
-  "description": "Install the Wyren MCP server and agent skills for Claude Code",
+  "version": "1.1.0",
+  "description": "Install the Wyren MCP server, agent skills, and auto-starting local render worker for Claude Code",
   "bin": {
     "wyren-mcp": "setup.mjs"
   },
+  "scripts": {
+    "sync-worker": "node scripts/sync-worker.mjs"
+  },
   "files": [
     "setup.mjs",
-    "skills/"
+    "worker-launcher.mjs",
+    "lib/",
+    "scripts/",
+    "skills/",
+    "worker-standalone/",
+    "remotion-bundle/",
+    "CHANGELOG.md"
   ],
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.975.0",
+    "@aws-sdk/lib-storage": "^3.975.0",
+    "@remotion/renderer": "4.0.421",
+    "ffmpeg-static": "^5.3.0",
+    "file-type": "^21.3.0",
+    "ws": "^8.18.0",
+    "zod": "3.22.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "keywords": [
     "wyren",
     "mcp",
     "claude",
     "ai",
     "video",
-    "agent-skills"
+    "agent-skills",
+    "render-worker"
   ],
   "license": "MIT",
   "repository": {

@@ -1,0 +1,4 @@
+# Never ship a local install or pack output. (Sourcemaps are excluded at sync
+# time by scripts/sync-worker.mjs, so they never land in the package tree.)
+node_modules/
+*.tgz
