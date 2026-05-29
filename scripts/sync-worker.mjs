@@ -13,8 +13,8 @@
 //   node scripts/sync-worker.mjs /path/to/frames
 //
 // Provenance of the artifacts currently vendored in this package:
-//   monorepo branch: promote/develop-to-staging-device-auth
-//   monorepo commit: 80a3fa9
+//   monorepo branch: main
+//   monorepo commit: a3edc51
 //   tsup config:     backend/tsup.worker.config.ts
 //   externals (must stay in this package's dependencies, in sync with that
 //     config's EXTERNAL_RUNTIME_DEPS):
@@ -59,9 +59,17 @@ for (const [label, src] of [
   const dest = join(PKG_ROOT, label);
   if (existsSync(dest)) rmSync(dest, { recursive: true });
   mkdirSync(dest, { recursive: true });
-  // Skip sourcemaps — debug-only, ~10MB of dead weight in a runtime package.
-  cpSync(src, dest, { recursive: true, filter: (s) => !s.endsWith('.map') });
-  console.log(`Synced ${label} → ${dest} (sourcemaps excluded)`);
+  // worker-standalone: drop its `index.mjs.map` — debug-only (~5MB), unused at
+  //   runtime. remotion-bundle: KEEP `.map` files — Remotion's `prepareServer`
+  //   reads `bundle.js.map` at render time, so stripping it makes
+  //   `selectComposition` throw `ENOENT … bundle.js.map` and breaks EVERY
+  //   caption / slideshow render in the daemon.
+  const keepMaps = label === 'remotion-bundle';
+  cpSync(src, dest, {
+    recursive: true,
+    ...(keepMaps ? {} : { filter: (s) => !s.endsWith('.map') }),
+  });
+  console.log(`Synced ${label} → ${dest} (sourcemaps ${keepMaps ? 'kept — Remotion needs bundle.js.map' : 'excluded'})`);
 }
 
 console.log('\nDone. Remember to bump the provenance commit in this script.');

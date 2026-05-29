@@ -1,14 +1,14 @@
 import { createRequire } from 'module';
 import url, { fileURLToPath, parse, URLSearchParams as URLSearchParams$1, URL as URL$1 } from 'url';
 import * as path8 from 'path';
-import path8__default, { dirname, join, extname, normalize, sep } from 'path';
+import path8__default, { dirname, join, normalize, sep, extname } from 'path';
 import { Buffer as Buffer$1 } from 'buffer';
 import { Readable, Writable, Duplex } from 'stream';
 import https, { Agent, request } from 'https';
 import 'http2';
 import crypto2, { createHmac, createHash, createPrivateKey, createPublicKey, sign } from 'crypto';
-import * as os4 from 'os';
-import os4__default, { platform, release, freemem, homedir } from 'os';
+import * as os3 from 'os';
+import os3__default, { totalmem, cpus, platform, release, freemem, homedir } from 'os';
 import fs19, { writeFile as writeFile$1, stat, open, rm, readFile as readFile$1 } from 'fs/promises';
 import http, { request as request$1 } from 'http';
 import { env, versions } from 'process';
@@ -1376,7 +1376,7 @@ var require_signal_exit = __commonJS({
 // node_modules/execa/lib/kill.js
 var require_kill = __commonJS({
   "node_modules/execa/lib/kill.js"(exports2, module) {
-    var os11 = __require("os");
+    var os9 = __require("os");
     var onExit = require_signal_exit();
     var DEFAULT_FORCE_KILL_TIMEOUT = 1e3 * 5;
     var spawnedKill = (kill, signal = "SIGTERM", options = {}) => {
@@ -1400,7 +1400,7 @@ var require_kill = __commonJS({
       return isSigterm(signal) && forceKillAfterTimeout !== false && killResult;
     };
     var isSigterm = (signal) => {
-      return signal === os11.constants.signals.SIGTERM || typeof signal === "string" && signal.toUpperCase() === "SIGTERM";
+      return signal === os9.constants.signals.SIGTERM || typeof signal === "string" && signal.toUpperCase() === "SIGTERM";
     };
     var getForceKillAfterTimeout = ({ forceKillAfterTimeout = true }) => {
       if (forceKillAfterTimeout === true) {
@@ -4198,7 +4198,7 @@ var require_websocket = __commonJS({
   "node_modules/@remotion/renderer/node_modules/ws/lib/websocket.js"(exports2, module) {
     var EventEmitter3 = __require("events");
     var https2 = __require("https");
-    var http3 = __require("http");
+    var http4 = __require("http");
     var net2 = __require("net");
     var tls = __require("tls");
     var { randomBytes, createHash: createHash4 } = __require("crypto");
@@ -4728,7 +4728,7 @@ var require_websocket = __commonJS({
       }
       const defaultPort = isSecure ? 443 : 80;
       const key = randomBytes(16).toString("base64");
-      const request2 = isSecure ? https2.request : http3.request;
+      const request2 = isSecure ? https2.request : http4.request;
       const protocolSet = /* @__PURE__ */ new Set();
       let perMessageDeflate;
       opts.createConnection = opts.createConnection || (isSecure ? tlsConnect : netConnect);
@@ -5099,7 +5099,7 @@ var require_subprotocol = __commonJS({
 var require_websocket_server = __commonJS({
   "node_modules/@remotion/renderer/node_modules/ws/lib/websocket-server.js"(exports2, module) {
     var EventEmitter3 = __require("events");
-    var http3 = __require("http");
+    var http4 = __require("http");
     var { Duplex: Duplex2 } = __require("stream");
     var { createHash: createHash4 } = __require("crypto");
     var extension2 = require_extension();
@@ -5170,8 +5170,8 @@ var require_websocket_server = __commonJS({
           );
         }
         if (options.port != null) {
-          this._server = http3.createServer((req, res) => {
-            const body = http3.STATUS_CODES[426];
+          this._server = http4.createServer((req, res) => {
+            const body = http4.STATUS_CODES[426];
             res.writeHead(426, {
               "Content-Length": body.length,
               "Content-Type": "text/plain"
@@ -5456,7 +5456,7 @@ var require_websocket_server = __commonJS({
       this.destroy();
     }
     function abortHandshake(socket, code, message, headers) {
-      message = message || http3.STATUS_CODES[code];
+      message = message || http4.STATUS_CODES[code];
       headers = {
         Connection: "close",
         "Content-Type": "text/html",
@@ -5465,7 +5465,7 @@ var require_websocket_server = __commonJS({
       };
       socket.once("finish", socket.destroy);
       socket.end(
-        `HTTP/1.1 ${code} ${http3.STATUS_CODES[code]}\r
+        `HTTP/1.1 ${code} ${http4.STATUS_CODES[code]}\r
 ` + Object.keys(headers).map((h6) => `${h6}: ${headers[h6]}`).join("\r\n") + "\r\n\r\n" + message
       );
     }
@@ -7985,7 +7985,7 @@ var require_has_flag = __commonJS({
 // node_modules/supports-color/index.js
 var require_supports_color = __commonJS({
   "node_modules/supports-color/index.js"(exports2, module) {
-    var os11 = __require("os");
+    var os9 = __require("os");
     var tty2 = __require("tty");
     var hasFlag = require_has_flag();
     var { env: env2 } = process;
@@ -8033,7 +8033,7 @@ var require_supports_color = __commonJS({
         return min;
       }
       if (process.platform === "win32") {
-        const osRelease = os11.release().split(".");
+        const osRelease = os9.release().split(".");
         if (Number(osRelease[0]) >= 10 && Number(osRelease[2]) >= 10586) {
           return Number(osRelease[2]) >= 14931 ? 3 : 2;
         }
@@ -12172,7 +12172,7 @@ var require_websocket2 = __commonJS({
   "node_modules/ws/lib/websocket.js"(exports2, module) {
     var EventEmitter3 = __require("events");
     var https2 = __require("https");
-    var http3 = __require("http");
+    var http4 = __require("http");
     var net2 = __require("net");
     var tls = __require("tls");
     var { randomBytes, createHash: createHash4 } = __require("crypto");
@@ -12706,7 +12706,7 @@ var require_websocket2 = __commonJS({
       }
       const defaultPort = isSecure ? 443 : 80;
       const key = randomBytes(16).toString("base64");
-      const request2 = isSecure ? https2.request : http3.request;
+      const request2 = isSecure ? https2.request : http4.request;
       const protocolSet = /* @__PURE__ */ new Set();
       let perMessageDeflate;
       opts.createConnection = opts.createConnection || (isSecure ? tlsConnect : netConnect);
@@ -13197,7 +13197,7 @@ var require_subprotocol2 = __commonJS({
 var require_websocket_server2 = __commonJS({
   "node_modules/ws/lib/websocket-server.js"(exports2, module) {
     var EventEmitter3 = __require("events");
-    var http3 = __require("http");
+    var http4 = __require("http");
     var { Duplex: Duplex2 } = __require("stream");
     var { createHash: createHash4 } = __require("crypto");
     var extension2 = require_extension2();
@@ -13272,8 +13272,8 @@ var require_websocket_server2 = __commonJS({
           );
         }
         if (options.port != null) {
-          this._server = http3.createServer((req, res) => {
-            const body = http3.STATUS_CODES[426];
+          this._server = http4.createServer((req, res) => {
+            const body = http4.STATUS_CODES[426];
             res.writeHead(426, {
               "Content-Length": body.length,
               "Content-Type": "text/plain"
@@ -13560,7 +13560,7 @@ var require_websocket_server2 = __commonJS({
       this.destroy();
     }
     function abortHandshake(socket, code, message, headers) {
-      message = message || http3.STATUS_CODES[code];
+      message = message || http4.STATUS_CODES[code];
       headers = {
         Connection: "close",
         "Content-Type": "text/html",
@@ -13569,7 +13569,7 @@ var require_websocket_server2 = __commonJS({
       };
       socket.once("finish", socket.destroy);
       socket.end(
-        `HTTP/1.1 ${code} ${http3.STATUS_CODES[code]}\r
+        `HTTP/1.1 ${code} ${http4.STATUS_CODES[code]}\r
 ` + Object.keys(headers).map((h6) => `${h6}: ${headers[h6]}`).join("\r\n") + "\r\n\r\n" + message
       );
     }
@@ -37150,7 +37150,7 @@ var require_ffmpeg_static = __commonJS({
     if (process.env[BINARY_PATH_ENV_VAR]) {
       module.exports = process.env[BINARY_PATH_ENV_VAR];
     } else {
-      os11 = __require("os");
+      os9 = __require("os");
       path32 = __require("path");
       binaries = Object.assign(/* @__PURE__ */ Object.create(null), {
         darwin: ["x64", "arm64"],
@@ -37158,8 +37158,8 @@ var require_ffmpeg_static = __commonJS({
         linux: ["x64", "ia32", "arm64", "arm"],
         win32: ["x64", "ia32"]
       });
-      platform4 = process.env.npm_config_platform || os11.platform();
-      arch2 = process.env.npm_config_arch || os11.arch();
+      platform4 = process.env.npm_config_platform || os9.platform();
+      arch2 = process.env.npm_config_arch || os9.arch();
       let binaryPath = path32.join(
         __dirname$1,
         executableBaseName + (platform4 === "win32" ? ".exe" : "")
@@ -37169,7 +37169,7 @@ var require_ffmpeg_static = __commonJS({
       }
       module.exports = binaryPath;
     }
-    var os11;
+    var os9;
     var path32;
     var binaries;
     var platform4;
@@ -37189,10 +37189,10 @@ var bundle = noop;
 // node_modules/@remotion/renderer/dist/esm/index.mjs
 var import_execa = __toESM(require_execa(), 1);
 
-// node_modules/@remotion/renderer/node_modules/remotion/dist/esm/version.mjs
-var VERSION = "4.0.452";
+// node_modules/remotion/dist/esm/version.mjs
+var VERSION = "4.0.421";
 
-// node_modules/@remotion/renderer/node_modules/remotion/dist/esm/no-react.mjs
+// node_modules/remotion/dist/esm/no-react.mjs
 function interpolateFunction(input, inputRange, outputRange, options) {
   const { easing } = options;
   let result = input;
@@ -37355,10 +37355,6 @@ var PERCENTAGE = NUMBER + "%";
 function call(...args) {
   return "\\(\\s*(" + args.join(")\\s*,\\s*(") + ")\\s*\\)";
 }
-var MODERN_VALUE = "(?:none|[-+]?\\d*\\.?\\d+(?:%|deg|rad|grad|turn)?)";
-function modernColorCall(name) {
-  return new RegExp(name + "\\(\\s*(" + MODERN_VALUE + ")\\s+(" + MODERN_VALUE + ")\\s+(" + MODERN_VALUE + ")(?:\\s*\\/\\s*(" + MODERN_VALUE + "))?\\s*\\)");
-}
 function getMatchers() {
   const cachedMatchers = {
     rgb: void 0,
@@ -37369,12 +37365,7 @@ function getMatchers() {
     hex4: void 0,
     hex5: void 0,
     hex6: void 0,
-    hex8: void 0,
-    oklch: void 0,
-    oklab: void 0,
-    lab: void 0,
-    lch: void 0,
-    hwb: void 0
+    hex8: void 0
   };
   if (cachedMatchers.rgb === void 0) {
     cachedMatchers.rgb = new RegExp("rgb" + call(NUMBER, NUMBER, NUMBER));
@@ -37385,11 +37376,6 @@ function getMatchers() {
     cachedMatchers.hex4 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
     cachedMatchers.hex6 = /^#([0-9a-fA-F]{6})$/;
     cachedMatchers.hex8 = /^#([0-9a-fA-F]{8})$/;
-    cachedMatchers.oklch = modernColorCall("oklch");
-    cachedMatchers.oklab = modernColorCall("oklab");
-    cachedMatchers.lab = modernColorCall("lab");
-    cachedMatchers.lch = modernColorCall("lch");
-    cachedMatchers.hwb = modernColorCall("hwb");
   }
   return cachedMatchers;
 }
@@ -37452,96 +37438,6 @@ function parsePercentage(str) {
     return 1;
   }
   return int / 100;
-}
-function parseModernComponent(str, percentScale) {
-  if (str === "none")
-    return 0;
-  if (str.endsWith("%")) {
-    return Number.parseFloat(str) / 100 * percentScale;
-  }
-  return Number.parseFloat(str);
-}
-function parseHueAngle(str) {
-  if (str === "none")
-    return 0;
-  if (str.endsWith("rad")) {
-    return Number.parseFloat(str) * 180 / Math.PI;
-  }
-  if (str.endsWith("grad"))
-    return Number.parseFloat(str) * 0.9;
-  if (str.endsWith("turn"))
-    return Number.parseFloat(str) * 360;
-  return Number.parseFloat(str);
-}
-function parseModernAlpha(str) {
-  if (str === void 0 || str === "none")
-    return 1;
-  if (str.endsWith("%")) {
-    return Math.max(0, Math.min(1, Number.parseFloat(str) / 100));
-  }
-  return Math.max(0, Math.min(1, Number.parseFloat(str)));
-}
-function linearToSrgb(c6) {
-  if (c6 <= 31308e-7)
-    return 12.92 * c6;
-  return 1.055 * c6 ** (1 / 2.4) - 0.055;
-}
-function clamp01(v2) {
-  return Math.max(0, Math.min(1, v2));
-}
-function rgbFloatToInt(r6, g6, b6, alpha) {
-  const ri = Math.round(clamp01(r6) * 255);
-  const gi = Math.round(clamp01(g6) * 255);
-  const bi = Math.round(clamp01(b6) * 255);
-  const ai2 = Math.round(clamp01(alpha) * 255);
-  return (ri << 24 | gi << 16 | bi << 8 | ai2) >>> 0;
-}
-function oklabToSrgb(L2, a6, b6) {
-  const l_ = L2 + 0.3963377774 * a6 + 0.2158037573 * b6;
-  const m_ = L2 - 0.1055613458 * a6 - 0.0638541728 * b6;
-  const s_ = L2 - 0.0894841775 * a6 - 1.291485548 * b6;
-  const l4 = l_ * l_ * l_;
-  const m4 = m_ * m_ * m_;
-  const s2 = s_ * s_ * s_;
-  const rLin = 4.0767416621 * l4 - 3.3077115913 * m4 + 0.2309699292 * s2;
-  const gLin = -1.2684380046 * l4 + 2.6097574011 * m4 - 0.3413193965 * s2;
-  const bLin = -0.0041960863 * l4 - 0.7034186147 * m4 + 1.707614701 * s2;
-  return [linearToSrgb(rLin), linearToSrgb(gLin), linearToSrgb(bLin)];
-}
-function labToSrgb(L2, a6, b6) {
-  const epsilon = 216 / 24389;
-  const kappa = 24389 / 27;
-  const Xn = 0.95047;
-  const Yn = 1;
-  const Zn = 1.08883;
-  const fy = (L2 + 16) / 116;
-  const fx = a6 / 500 + fy;
-  const fz = fy - b6 / 200;
-  const fx3 = fx * fx * fx;
-  const fz3 = fz * fz * fz;
-  const xr = fx3 > epsilon ? fx3 : (116 * fx - 16) / kappa;
-  const yr = L2 > kappa * epsilon ? ((L2 + 16) / 116) ** 3 : L2 / kappa;
-  const zr = fz3 > epsilon ? fz3 : (116 * fz - 16) / kappa;
-  const X2 = xr * Xn;
-  const Y2 = yr * Yn;
-  const Z2 = zr * Zn;
-  const rLin = 3.2404542 * X2 - 1.5371385 * Y2 - 0.4985314 * Z2;
-  const gLin = -0.969266 * X2 + 1.8760108 * Y2 + 0.041556 * Z2;
-  const bLin = 0.0556434 * X2 - 0.2040259 * Y2 + 1.0572252 * Z2;
-  return [linearToSrgb(rLin), linearToSrgb(gLin), linearToSrgb(bLin)];
-}
-function hwbToSrgb(h6, w2, bk) {
-  if (w2 + bk >= 1) {
-    const gray = w2 / (w2 + bk);
-    return [gray, gray, gray];
-  }
-  const q3 = 1;
-  const p3 = 0;
-  const r6 = hue2rgb(p3, q3, h6 + 1 / 3);
-  const g6 = hue2rgb(p3, q3, h6);
-  const bl = hue2rgb(p3, q3, h6 - 1 / 3);
-  const factor = 1 - w2 - bk;
-  return [r6 * factor + w2, g6 * factor + w2, bl * factor + w2];
 }
 var colorNames = {
   transparent: 0,
@@ -37741,58 +37637,6 @@ function normalizeColor(color) {
       return (hslToRgb(parse360(match[1]), parsePercentage(match[2]), parsePercentage(match[3])) | parse1(match[4])) >>> 0;
     }
   }
-  if (matchers.oklch) {
-    if (match = matchers.oklch.exec(color)) {
-      const L2 = parseModernComponent(match[1], 1);
-      const C2 = parseModernComponent(match[2], 0.4);
-      const H2 = parseHueAngle(match[3]);
-      const alpha = parseModernAlpha(match[4]);
-      const hRad = H2 * Math.PI / 180;
-      const [r6, g6, b6] = oklabToSrgb(L2, C2 * Math.cos(hRad), C2 * Math.sin(hRad));
-      return rgbFloatToInt(r6, g6, b6, alpha);
-    }
-  }
-  if (matchers.oklab) {
-    if (match = matchers.oklab.exec(color)) {
-      const L2 = parseModernComponent(match[1], 1);
-      const a6 = parseModernComponent(match[2], 0.4);
-      const b6 = parseModernComponent(match[3], 0.4);
-      const alpha = parseModernAlpha(match[4]);
-      const [r6, g6, bl] = oklabToSrgb(L2, a6, b6);
-      return rgbFloatToInt(r6, g6, bl, alpha);
-    }
-  }
-  if (matchers.lab) {
-    if (match = matchers.lab.exec(color)) {
-      const L2 = parseModernComponent(match[1], 100);
-      const a6 = parseModernComponent(match[2], 125);
-      const b6 = parseModernComponent(match[3], 125);
-      const alpha = parseModernAlpha(match[4]);
-      const [r6, g6, bl] = labToSrgb(L2, a6, b6);
-      return rgbFloatToInt(r6, g6, bl, alpha);
-    }
-  }
-  if (matchers.lch) {
-    if (match = matchers.lch.exec(color)) {
-      const L2 = parseModernComponent(match[1], 100);
-      const C2 = parseModernComponent(match[2], 150);
-      const H2 = parseHueAngle(match[3]);
-      const alpha = parseModernAlpha(match[4]);
-      const hRad = H2 * Math.PI / 180;
-      const [r6, g6, bl] = labToSrgb(L2, C2 * Math.cos(hRad), C2 * Math.sin(hRad));
-      return rgbFloatToInt(r6, g6, bl, alpha);
-    }
-  }
-  if (matchers.hwb) {
-    if (match = matchers.hwb.exec(color)) {
-      const H2 = parseHueAngle(match[1]);
-      const W2 = parseModernComponent(match[2], 1);
-      const B2 = parseModernComponent(match[3], 1);
-      const alpha = parseModernAlpha(match[4]);
-      const [r6, g6, bl] = hwbToSrgb(H2 / 360, W2, B2);
-      return rgbFloatToInt(r6, g6, bl, alpha);
-    }
-  }
   throw new Error(`invalid color string ${color} provided`);
 }
 function processColor(color) {
@@ -37837,7 +37681,6 @@ var validCodecs = [
   "h265",
   "vp8",
   "vp9",
-  "av1",
   "mp3",
   "aac",
   "wav",
@@ -38400,7 +38243,7 @@ var zipFolder = ({
   indent,
   logLevel
 }) => {
-  const platform4 = os4__default.platform();
+  const platform4 = os3__default.platform();
   try {
     Log.info({ indent, logLevel }, "+ Creating reproduction ZIP");
     if (platform4 === "win32") {
@@ -38680,7 +38523,6 @@ var tryToObtainBody = async (file) => {
 };
 var CANCELLED_ERROR = "cancelled";
 var incorrectContentLengthToken = "Download finished with";
-var noDataSentToken = "but the server sent no data for";
 var downloadFileWithoutRetries = ({
   onProgress,
   url: url2,
@@ -38715,7 +38557,7 @@ var downloadFileWithoutRetries = ({
         if (resolved) {
           return;
         }
-        rejectAndFlag(new Error(`Tried to download file ${url2}, ${noDataSentToken} 20 seconds`));
+        rejectAndFlag(new Error(`Tried to download file ${url2}, but the server sent no data for 20 seconds`));
       }, 2e4);
     };
     refreshTimeout();
@@ -38800,7 +38642,7 @@ var downloadFile = async (options, retries = 2, attempt = 1) => {
     if (message === CANCELLED_ERROR) {
       throw err;
     }
-    if (message === "aborted" || message.includes("ECONNRESET") || message.includes(incorrectContentLengthToken) || message.includes(noDataSentToken) || message.includes("503") || message.includes("502") || message.includes("504") || message.includes("500")) {
+    if (message === "aborted" || message.includes("ECONNRESET") || message.includes(incorrectContentLengthToken) || message.includes("503") || message.includes("502") || message.includes("504") || message.includes("500")) {
       if (retries === 0) {
         throw err;
       }
@@ -39877,12 +39719,6 @@ var ExecutionContext = class {
     }
   }
 };
-var isTargetClosedErr = (error) => {
-  return error?.message?.includes("Target closed") || error?.message?.includes("Session closed");
-};
-var isFlakyNetworkError = (error) => {
-  return error?.message?.includes("ERR_CONNECTION_REFUSED") || error?.message?.includes("ERR_CONNECTION_RESET") || error?.message?.includes("ERR_CONNECTION_TIMED_OUT") || error?.message?.includes("ERR_INTERNET_DISCONNECTED") || error?.message?.includes("ERR_NAME_RESOLUTION_FAILED") || error?.message?.includes("ERR_ADDRESS_UNREACHABLE") || error?.message?.includes("ERR_NETWORK_CHANGED");
-};
 var handleFailedResource = ({
   extraInfo,
   logLevel,
@@ -40335,6 +40171,12 @@ var LifecycleWatcher = class {
       clearTimeout(this.#maximumTimer);
     }
   }
+};
+var isTargetClosedErr = (error) => {
+  return error?.message?.includes("Target closed") || error?.message?.includes("Session closed");
+};
+var isFlakyNetworkError = (error) => {
+  return error?.message?.includes("ERR_CONNECTION_REFUSED") || error?.message?.includes("ERR_CONNECTION_RESET") || error?.message?.includes("ERR_CONNECTION_TIMED_OUT") || error?.message?.includes("ERR_INTERNET_DISCONNECTED") || error?.message?.includes("ERR_NAME_RESOLUTION_FAILED") || error?.message?.includes("ERR_ADDRESS_UNREACHABLE") || error?.message?.includes("ERR_NETWORK_CHANGED");
 };
 var UTILITY_WORLD_NAME = "__puppeteer_utility_world__";
 var FrameManagerEmittedEvents = {
@@ -42164,25 +42006,12 @@ var checkBunVersion = () => {
     throw new Error(`Remotion requires at least Bun ${NoReactInternals.MIN_BUN_VERSION}. You currently have ${Bun.version}. Update your Bun version to ${NoReactInternals.MIN_BUN_VERSION} to use Remotion.`);
   }
 };
-var MIN_DARWIN_VERSION = 24;
-var MIN_MACOS_DISPLAY_VERSION = "15 (Sequoia)";
-var checkMacOSVersion = (logLevel, indent) => {
-  if (process.platform !== "darwin") {
-    return;
-  }
-  const majorVersion = Number(os4__default.release().split(".")[0]);
-  if (Number.isNaN(majorVersion) || majorVersion >= MIN_DARWIN_VERSION) {
-    return;
-  }
-  Log.warn({ logLevel, indent }, `Your macOS version is older than macOS ${MIN_MACOS_DISPLAY_VERSION}. Some features such as rendering may not work.`);
-};
 var checkRuntimeVersion = (logLevel, indent) => {
   if (typeof Bun === "undefined") {
     checkNodeVersion();
   } else {
     checkBunVersion();
   }
-  checkMacOSVersion(logLevel, indent);
   checkLibCRequirement(logLevel, indent);
 };
 var validCodecs2 = [
@@ -42190,7 +42019,6 @@ var validCodecs2 = [
   "h265",
   "vp8",
   "vp9",
-  "av1",
   "mp3",
   "aac",
   "wav",
@@ -42495,14 +42323,6 @@ var defaultFileExtensionMap = {
       "pcm-16": { possible: ["mkv"], default: "mkv" }
     }
   },
-  av1: {
-    default: "mp4",
-    forAudioCodec: {
-      aac: { possible: ["mp4", "mkv"], default: "mp4" },
-      opus: { possible: ["webm", "mkv"], default: "webm" },
-      "pcm-16": { possible: ["mkv"], default: "mkv" }
-    }
-  },
   mp3: {
     default: "mp3",
     forAudioCodec: {
@@ -42599,10 +42419,10 @@ var launchChrome = async ({
   }
   return browser;
 };
-var TESTED_VERSION = "149.0.7790.0";
-var PLAYWRIGHT_VERSION = "1421";
+var TESTED_VERSION = "144.0.7559.20";
+var PLAYWRIGHT_VERSION = "1207";
 var isAmazonLinux2023 = () => {
-  if (os4.platform() !== "linux") {
+  if (os3.platform() !== "linux") {
     return false;
   }
   try {
@@ -42663,7 +42483,7 @@ function getChromeDownloadUrl({
 }) {
   if (platform22 === "linux-arm64") {
     if (isAmazonLinux2023() && chromeMode === "headless-shell" && !version) {
-      return "https://remotion.media/chromium-headless-shell-amazon-linux-arm64-149.0.7790.0.zip?clear";
+      return "https://remotion.media/chromium-headless-shell-amazon-linux-arm64-144.0.7559.20.zip";
     }
     if (chromeMode === "chrome-for-testing") {
       return `https://playwright.azureedge.net/builds/chromium/${version ?? PLAYWRIGHT_VERSION}/chromium-linux-arm64.zip`;
@@ -42672,17 +42492,17 @@ function getChromeDownloadUrl({
       return `https://playwright.azureedge.net/builds/chromium/${version}/chromium-headless-shell-linux-arm64.zip`;
     }
     if (canUseRemotionMediaBinaries()) {
-      return `https://remotion.media/chromium-headless-shell-linux-arm64-${TESTED_VERSION}.zip?clear`;
+      return `https://remotion.media/chromium-headless-shell-linux-arm64-${TESTED_VERSION}.zip?clearcache`;
     }
     return `https://playwright.azureedge.net/builds/chromium/${PLAYWRIGHT_VERSION}/chromium-headless-shell-linux-arm64.zip`;
   }
   if (chromeMode === "headless-shell") {
     if (isAmazonLinux2023() && platform22 === "linux64" && !version) {
-      return `https://remotion.media/chromium-headless-shell-amazon-linux-x64-149.0.7790.0.zip?clear`;
+      return `https://remotion.media/chromium-headless-shell-amazon-linux-x64-144.0.7559.20.zip`;
     }
     if (platform22 === "linux64" && version === null) {
       if (canUseRemotionMediaBinaries()) {
-        return `https://remotion.media/chromium-headless-shell-linux-x64-${TESTED_VERSION}.zip?clear`;
+        return `https://remotion.media/chromium-headless-shell-linux-x64-${TESTED_VERSION}.zip?clearcache`;
       }
       return `https://storage.googleapis.com/chrome-for-testing-public/${TESTED_VERSION}/${platform22}/chrome-headless-shell-${platform22}.zip`;
     }
@@ -42735,12 +42555,12 @@ function existsAsync(filePath) {
   });
 }
 var getPlatform = () => {
-  const platform32 = os4.platform();
+  const platform32 = os3.platform();
   switch (platform32) {
     case "darwin":
-      return os4.arch() === "arm64" ? "mac-arm64" : "mac-x64";
+      return os3.arch() === "arm64" ? "mac-arm64" : "mac-x64";
     case "linux":
-      return os4.arch() === "arm64" ? "linux-arm64" : "linux64";
+      return os3.arch() === "arm64" ? "linux-arm64" : "linux64";
     case "win32":
       return "win64";
     default:
@@ -42802,7 +42622,7 @@ var downloadBrowser = async ({
       recursive: true
     });
   }
-  if (os4.platform() !== "darwin" && os4.platform() !== "linux" && os4.arch() === "arm64") {
+  if (os3.platform() !== "darwin" && os3.platform() !== "linux" && os3.arch() === "arm64") {
     throw new Error([
       "Chrome Headless Shell is not available for Windows for arm64 architecture."
     ].join(`
@@ -43006,14 +42826,8 @@ var getConcurrencyFromNProc = () => {
     return null;
   }
 };
-var getNodeCpuCount = () => {
-  if (typeof os4__default.availableParallelism === "function") {
-    return os4__default.availableParallelism();
-  }
-  return os4__default.cpus().length;
-};
 var getCpuCount = () => {
-  const node = getNodeCpuCount();
+  const node = cpus().length;
   const nproc = getConcurrencyFromNProc();
   if (nproc === null) {
     return node;
@@ -43132,7 +42946,7 @@ var getAvailableMemory = (logLevel) => {
         Log.warn({ indent: false, logLevel }, `Memory reported by /proc/meminfo: ${(_procInfo / 1024 / 1024).toFixed(2)} MB`);
       }
       Log.warn({ indent: false, logLevel }, `Memory reported by Node: ${(nodeMemory / 1024 / 1024).toFixed(2)} MB`);
-      Log.warn({ indent: false, logLevel }, "You might have inadvertently set the --memory flag of `docker run` to a value that is higher than the global Docker memory limit.");
+      Log.warn({ indent: false, logLevel }, "You might have inadvertenly set the --memory flag of `docker run` to a value that is higher than the global Docker memory limit.");
       Log.warn({ indent: false, logLevel }, "Using the lower amount of memory for calculation.");
     }
     return Math.min(nodeMemory, cgroupMemory);
@@ -43147,8 +42961,8 @@ var MEMORY_USAGE_PER_THREAD = 4e8;
 var RESERVED_MEMORY = 2e9;
 var getIdealVideoThreadsFlag = (logLevel) => {
   const freeMemory = getAvailableMemory(logLevel);
-  const cpus = getCpuCount();
-  const maxRecommendedBasedOnCpus = cpus * 2 / 3;
+  const cpus22 = getCpuCount();
+  const maxRecommendedBasedOnCpus = cpus22 * 2 / 3;
   const maxRecommendedBasedOnMemory = (freeMemory - RESERVED_MEMORY) / MEMORY_USAGE_PER_THREAD;
   const maxRecommended = Math.min(maxRecommendedBasedOnCpus, maxRecommendedBasedOnMemory);
   return Math.max(1, Math.round(maxRecommended));
@@ -43173,11 +42987,7 @@ var validateOpenGlRenderer = (option) => {
 };
 var featuresToEnable = (option) => {
   const renderer = option ?? DEFAULT_OPENGL_RENDERER;
-  const enableAlways = [
-    "NetworkService",
-    "NetworkServiceInProcess",
-    "CanvasDrawElement"
-  ];
+  const enableAlways = ["NetworkService", "NetworkServiceInProcess"];
   if (renderer === "vulkan") {
     return [...enableAlways, "Vulkan", "UseSkiaRenderer"];
   }
@@ -43245,7 +43055,7 @@ var internalOpenBrowser = async ({
   if (chromiumOptions.userAgent) {
     Log.verbose({ indent, logLevel, tag: "openBrowser()" }, `Using custom user agent: ${chromiumOptions.userAgent}`);
   }
-  const userDataDir = await fs7__default.promises.mkdtemp(path8__default.join(os4__default.tmpdir(), "puppeteer_dev_chrome_profile-"));
+  const userDataDir = await fs7__default.promises.mkdtemp(path8__default.join(os3__default.tmpdir(), "puppeteer_dev_chrome_profile-"));
   const browserInstance = await launchChrome({
     executablePath,
     logLevel,
@@ -52980,7 +52790,7 @@ var randomHash = () => {
   }).join("");
 };
 var tmpDir = (str) => {
-  const newDir = path8__default.join(os4__default.tmpdir(), str + randomHash());
+  const newDir = path8__default.join(os3__default.tmpdir(), str + randomHash());
   if (fs7__default.existsSync(newDir)) {
     fs7__default.rmSync(newDir, {
       recursive: true,
@@ -52990,6 +52800,7 @@ var tmpDir = (str) => {
   mkdirSync(newDir);
   return newDir;
 };
+var DEFAULT_SAMPLE_RATE = 48e3;
 var applyToneFrequencyUsingFfmpeg = async ({
   input,
   output,
@@ -52997,10 +52808,9 @@ var applyToneFrequencyUsingFfmpeg = async ({
   indent,
   logLevel,
   binariesDirectory,
-  cancelSignal,
-  sampleRate
+  cancelSignal
 }) => {
-  const filter = `asetrate=${sampleRate}*${toneFrequency},aresample=${sampleRate},atempo=1/${toneFrequency}`;
+  const filter = `asetrate=${DEFAULT_SAMPLE_RATE}*${toneFrequency},aresample=${DEFAULT_SAMPLE_RATE},atempo=1/${toneFrequency}`;
   const args = [
     "-hide_banner",
     "-i",
@@ -53009,7 +52819,7 @@ var applyToneFrequencyUsingFfmpeg = async ({
     "-filter:a",
     filter,
     ["-c:a", "pcm_s16le"],
-    ["-ar", String(sampleRate)],
+    ["-ar", String(DEFAULT_SAMPLE_RATE)],
     "-y",
     output
   ].flat(2);
@@ -53047,7 +52857,7 @@ var correctFloatingPointError = (value) => {
 var BIT_DEPTH = 16;
 var BYTES_PER_SAMPLE = BIT_DEPTH / 8;
 var NUMBER_OF_CHANNELS = 2;
-var makeInlineAudioMixing = (dir, sampleRate) => {
+var makeInlineAudioMixing = (dir) => {
   const folderToAdd = makeAndReturn(dir, "remotion-inline-audio-mixing");
   const openFiles = {};
   const writtenHeaders = {};
@@ -53082,7 +52892,7 @@ var makeInlineAudioMixing = (dir, sampleRate) => {
       return;
     }
     writtenHeaders[filePath] = true;
-    const expectedDataSize = Math.round((totalNumberOfFrames / fps - trimLeftOffset + trimRightOffset) * NUMBER_OF_CHANNELS * sampleRate * BYTES_PER_SAMPLE);
+    const expectedDataSize = Math.round((totalNumberOfFrames / fps - trimLeftOffset + trimRightOffset) * NUMBER_OF_CHANNELS * DEFAULT_SAMPLE_RATE * BYTES_PER_SAMPLE);
     const expectedSize = 40 + expectedDataSize;
     const fd = openFiles[filePath];
     writeSync(fd, new Uint8Array([82, 73, 70, 70]), 0, 4, 0);
@@ -53092,8 +52902,8 @@ var makeInlineAudioMixing = (dir, sampleRate) => {
     writeSync(fd, new Uint8Array([BIT_DEPTH, 0, 0, 0]), 0, 4, 16);
     writeSync(fd, new Uint8Array([1, 0]), 0, 2, 20);
     writeSync(fd, new Uint8Array([NUMBER_OF_CHANNELS, 0]), 0, 2, 22);
-    writeSync(fd, new Uint8Array(numberTo32BiIntLittleEndian(sampleRate)), 0, 4, 24);
-    writeSync(fd, new Uint8Array(numberTo32BiIntLittleEndian(sampleRate * NUMBER_OF_CHANNELS * BYTES_PER_SAMPLE)), 0, 4, 28);
+    writeSync(fd, new Uint8Array(numberTo32BiIntLittleEndian(DEFAULT_SAMPLE_RATE)), 0, 4, 24);
+    writeSync(fd, new Uint8Array(numberTo32BiIntLittleEndian(DEFAULT_SAMPLE_RATE * NUMBER_OF_CHANNELS * BYTES_PER_SAMPLE)), 0, 4, 28);
     writeSync(fd, new Uint8Array(numberTo16BitLittleEndian(NUMBER_OF_CHANNELS * BYTES_PER_SAMPLE)), 0, 2, 32);
     writeSync(fd, numberTo16BitLittleEndian(BIT_DEPTH), 0, 2, 34);
     writeSync(fd, new Uint8Array([100, 97, 116, 97]), 0, 4, 36);
@@ -53103,8 +52913,7 @@ var makeInlineAudioMixing = (dir, sampleRate) => {
     binariesDirectory,
     indent,
     logLevel,
-    cancelSignal,
-    sampleRate: finishSampleRate
+    cancelSignal
   }) => {
     for (const fd of Object.keys(openFiles)) {
       const frequency = toneFrequencies[fd];
@@ -53117,8 +52926,7 @@ var makeInlineAudioMixing = (dir, sampleRate) => {
           indent,
           logLevel,
           binariesDirectory,
-          cancelSignal,
-          sampleRate: finishSampleRate
+          cancelSignal
         });
         fs7__default.renameSync(tmpFile, fd);
       }
@@ -53148,8 +52956,8 @@ var makeInlineAudioMixing = (dir, sampleRate) => {
     let arr = new Int16Array(asset.audio);
     const isFirst = asset.frame === firstFrame;
     const isLast = asset.frame === totalNumberOfFrames + firstFrame - 1;
-    const samplesToShaveFromStart = trimLeftOffset * sampleRate;
-    const samplesToShaveFromEnd = trimRightOffset * sampleRate;
+    const samplesToShaveFromStart = trimLeftOffset * DEFAULT_SAMPLE_RATE;
+    const samplesToShaveFromEnd = trimRightOffset * DEFAULT_SAMPLE_RATE;
     if (isFirst) {
       arr = arr.slice(Math.floor(correctFloatingPointError(samplesToShaveFromStart)) * NUMBER_OF_CHANNELS);
     }
@@ -53157,7 +52965,7 @@ var makeInlineAudioMixing = (dir, sampleRate) => {
       arr = arr.slice(0, arr.length + Math.ceil(correctFloatingPointError(samplesToShaveFromEnd)) * NUMBER_OF_CHANNELS);
     }
     const positionInSeconds = (asset.frame - firstFrame) / fps - (isFirst ? 0 : trimLeftOffset);
-    const position = Math.floor(correctFloatingPointError(positionInSeconds * sampleRate)) * NUMBER_OF_CHANNELS * BYTES_PER_SAMPLE;
+    const position = Math.floor(correctFloatingPointError(positionInSeconds * DEFAULT_SAMPLE_RATE)) * NUMBER_OF_CHANNELS * BYTES_PER_SAMPLE;
     writeSync(fileDescriptor, arr, 0, arr.byteLength, 44 + position);
   };
   return {
@@ -53172,7 +52980,7 @@ var makeAndReturn = (dir, name) => {
   mkdirSync(p3);
   return p3;
 };
-var makeDownloadMap = (sampleRate) => {
+var makeDownloadMap = () => {
   const dir = tmpDir(`remotion-v${VERSION}-assets`);
   let prevented = false;
   return {
@@ -53200,7 +53008,7 @@ var makeDownloadMap = (sampleRate) => {
     isPreventedFromCleanup: () => {
       return prevented;
     },
-    inlineAudioMixing: makeInlineAudioMixing(dir, sampleRate),
+    inlineAudioMixing: makeInlineAudioMixing(dir),
     cleanupController: new AbortController()
   };
 };
@@ -53293,29 +53101,33 @@ var isPortAvailableOnHost = ({
   host
 }) => {
   return new Promise((resolve22) => {
-    const server = net.createServer();
-    server.unref();
-    server.on("error", () => {
-      resolve22("unavailable");
+    let status = "unavailable";
+    const socket = new net.Socket();
+    socket.on("connect", () => {
+      status = "unavailable";
+      socket.destroy();
     });
-    server.listen({ port: portToTry, host }, () => {
-      server.close(() => {
-        resolve22("available");
-      });
+    socket.setTimeout(3e3);
+    socket.on("timeout", () => {
+      status = "unavailable";
+      socket.destroy();
+      resolve22(status);
     });
+    socket.on("error", () => {
+      status = "available";
+    });
+    socket.on("close", () => resolve22(status));
+    socket.connect(portToTry, host);
   });
 };
 var testPortAvailableOnMultipleHosts = async ({
   hosts,
   port
 }) => {
-  for (const host of hosts) {
-    const result = await isPortAvailableOnHost({ portToTry: port, host });
-    if (result === "unavailable") {
-      return "unavailable";
-    }
-  }
-  return "available";
+  const results = await Promise.all(hosts.map((host) => {
+    return isPortAvailableOnHost({ portToTry: port, host });
+  }));
+  return results.every((r6) => r6 === "available") ? "available" : "unavailable";
 };
 var getPort = async ({
   from,
@@ -53400,7 +53212,7 @@ var getPortConfig = (preferIpv4) => {
   if (cached) {
     return cached;
   }
-  const networkInterfaces = os4__default.networkInterfaces();
+  const networkInterfaces = os3__default.networkInterfaces();
   const flattened = flattenNetworkInterfaces(networkInterfaces);
   const host = getHostToBind(flattened, preferIpv4);
   const hostsToTry = getHostsToTry(flattened);
@@ -53785,10 +53597,9 @@ var prepareServer = async ({
   indent,
   offthreadVideoCacheSizeInBytes,
   binariesDirectory,
-  forceIPv4,
-  sampleRate
+  forceIPv4
 }) => {
-  const downloadMap = makeDownloadMap(sampleRate);
+  const downloadMap = makeDownloadMap();
   Log.verbose({ indent, logLevel }, "Created directory for temporary files", downloadMap.assetDir);
   if (isServeUrl(webpackConfigOrServeUrl)) {
     const {
@@ -54230,20 +54041,18 @@ var innerSetPropsAndEnv = async ({
   isMainTab,
   mediaCacheSizeInBytes,
   initialMemoryAvailable,
-  darkMode,
-  sampleRate
+  darkMode
 }) => {
   validatePuppeteerTimeout(timeoutInMilliseconds);
   const actualTimeout = timeoutInMilliseconds ?? DEFAULT_TIMEOUT;
   page.setDefaultTimeout(actualTimeout);
   page.setDefaultNavigationTimeout(actualTimeout);
   const urlToVisit = normalizeServeUrl(serveUrl);
-  await page.evaluateOnNewDocument((timeout, mainTab, cacheSizeInBytes, initMemoryAvailable, sRate) => {
+  await page.evaluateOnNewDocument((timeout, mainTab, cacheSizeInBytes, initMemoryAvailable) => {
     window.remotion_puppeteerTimeout = timeout;
     window.remotion_isMainTab = mainTab;
     window.remotion_mediaCacheSizeInBytes = cacheSizeInBytes;
     window.remotion_initialMemoryAvailable = initMemoryAvailable;
-    window.remotion_sampleRate = sRate;
     if (window.process === void 0) {
       window.process = {};
     }
@@ -54251,7 +54060,7 @@ var innerSetPropsAndEnv = async ({
       window.process.env = {};
     }
     window.process.env.NODE_ENV = "production";
-  }, actualTimeout, isMainTab, mediaCacheSizeInBytes, initialMemoryAvailable, sampleRate);
+  }, actualTimeout, isMainTab, mediaCacheSizeInBytes, initialMemoryAvailable);
   await page.evaluateOnNewDocument('window.remotion_broadcastChannel = new BroadcastChannel("remotion-video-frame-extraction")');
   if (envVariables) {
     await page.evaluateOnNewDocument((input) => {
@@ -54308,8 +54117,7 @@ var innerSetPropsAndEnv = async ({
       isMainTab,
       mediaCacheSizeInBytes,
       initialMemoryAvailable,
-      darkMode,
-      sampleRate
+      darkMode
     });
   };
   const [pageRes, error] = await gotoPageOrThrow(page, urlToVisit, actualTimeout);
@@ -54503,10 +54311,6 @@ var printUsefulErrorMessage = (err, logLevel, indent) => {
   if (err.message.includes("GLIBC_")) {
     Log.info({ indent, logLevel }, "\u{1F4A1} Remotion requires at least Libc 2.35.");
     Log.info({ indent, logLevel }, "\u{1F4A1} Get help for this issue: https://github.com/remotion-dev/remotion/issues/2439");
-  }
-  if (err.message.includes("AVCaptureDeviceTypeContinuityCamera")) {
-    Log.info({ indent, logLevel }, "\u{1F4A1} Remotion requires macOS 15 (Sequoia) or later.");
-    Log.info({ indent, logLevel }, "\u{1F4A1} Get help for this issue: https://github.com/remotion-dev/remotion/issues/7027");
   }
   if (err.message.includes("EBADF")) {
     Log.info({ indent, logLevel }, "\u{1F4A1} This error might be fixed by changing your Node version:");
@@ -54707,14 +54511,10 @@ var getRealFrameRange = (durationInFrames, frameRange) => {
     }
     return [frameRange, frameRange];
   }
-  const resolved = [
-    frameRange[0],
-    frameRange[1] === null ? durationInFrames - 1 : frameRange[1]
-  ];
-  if (resolved[0] < 0 || resolved[1] >= durationInFrames || resolved[0] > resolved[1]) {
-    throw new Error(`The "durationInFrames" of the <Composition /> was evaluated to be ${durationInFrames}, but frame range ${resolved.join("-")} is not inbetween 0-${durationInFrames - 1}`);
+  if (frameRange[1] >= durationInFrames || frameRange[0] < 0) {
+    throw new Error(`The "durationInFrames" of the <Composition /> was evaluated to be ${durationInFrames}, but frame range ${frameRange.join("-")} is not inbetween 0-${durationInFrames - 1}`);
   }
-  return resolved;
+  return frameRange;
 };
 var validVideoImageFormats = ["png", "jpeg", "none"];
 var DEFAULT_VIDEO_IMAGE_FORMAT = "jpeg";
@@ -54877,7 +54677,6 @@ var supportedAudioCodecs = {
   avi: [],
   gif: [],
   h265: ["aac", "pcm-16"],
-  av1: ["aac", "opus", "pcm-16"],
   mp3: ["mp3", "pcm-16"],
   prores: ["aac", "pcm-16"],
   vp8: ["opus", "pcm-16"],
@@ -54921,10 +54720,6 @@ var defaultAudioCodecs = {
     compressed: "aac"
   },
   h265: {
-    lossless: "pcm-16",
-    compressed: "aac"
-  },
-  av1: {
     lossless: "pcm-16",
     compressed: "aac"
   },
@@ -55016,25 +54811,23 @@ var parseFfmpegProgress = (input, fps) => {
     return Number(hundreds) / 100 * fps + Number(seconds) * fps + Number(minutes) * fps * 60 + Number(hours) * fps * 60 * 60;
   }
 };
-var durationOf1Frame = (sampleRate) => 1024 / sampleRate * 1e6;
+var durationOf1Frame = 1024 / DEFAULT_SAMPLE_RATE * 1e6;
 var roundWithFix = (targetTime) => {
   if (targetTime % 1 > 0.4999999) {
     return Math.ceil(targetTime);
   }
   return Math.floor(targetTime);
 };
-var getClosestAlignedTime = (targetTime, sampleRate) => {
-  const dur = durationOf1Frame(sampleRate);
-  const decimalFramesToTargetTime = targetTime * 1e6 / dur;
+var getClosestAlignedTime = (targetTime) => {
+  const decimalFramesToTargetTime = targetTime * 1e6 / durationOf1Frame;
   const nearestFrameIndexForTargetTime = roundWithFix(decimalFramesToTargetTime);
-  return nearestFrameIndexForTargetTime * dur / 1e6;
+  return nearestFrameIndexForTargetTime * durationOf1Frame / 1e6;
 };
 var getExtraFramesToCapture = ({
   compositionStart,
   realFrameRange,
   fps,
-  forSeamlessAacConcatenation,
-  sampleRate
+  forSeamlessAacConcatenation
 }) => {
   if (!forSeamlessAacConcatenation) {
     return {
@@ -55054,8 +54847,8 @@ var getExtraFramesToCapture = ({
     throw new Error("chunkStat - compositionStart may not be below 0");
   }
   const realRightEnd = realLeftEnd + (realFrameRange[1] - realFrameRange[0] + 1);
-  const aacAdjustedLeftEnd = Math.max(0, getClosestAlignedTime(realLeftEnd / fps, sampleRate) - 2 * (1024 / sampleRate));
-  const aacAdjustedRightEnd = getClosestAlignedTime(realRightEnd / fps, sampleRate) + 2 * (1024 / sampleRate);
+  const aacAdjustedLeftEnd = Math.max(0, getClosestAlignedTime(realLeftEnd / fps) - 2 * (1024 / DEFAULT_SAMPLE_RATE));
+  const aacAdjustedRightEnd = getClosestAlignedTime(realRightEnd / fps) + 2 * (1024 / DEFAULT_SAMPLE_RATE);
   const alignedStartFrameWithoutOffset = Math.floor(aacAdjustedLeftEnd * fps);
   const alignedStartFrame = alignedStartFrameWithoutOffset + compositionStart;
   const alignedEndFrame = Math.ceil(aacAdjustedRightEnd * fps) + compositionStart;
@@ -55174,8 +54967,7 @@ var makePage = async ({
   isMainTab,
   mediaCacheSizeInBytes,
   onLog,
-  darkMode,
-  sampleRate
+  darkMode
 }) => {
   const page = await browserReplacer.getBrowser().newPage({ context, logLevel, indent, pageIndex, onBrowserLog, onLog });
   pagesArray.push(page);
@@ -55203,11 +54995,10 @@ var makePage = async ({
     isMainTab,
     mediaCacheSizeInBytes,
     initialMemoryAvailable: getAvailableMemory(logLevel),
-    darkMode,
-    sampleRate
+    darkMode
   });
   await puppeteerEvaluateWithCatch({
-    pageFunction: (id, props, durationInFrames, fps, height, width, defaultCodec, defaultOutName, defaultVideoImageFormat, defaultPixelFormat, defaultProResProfile, defaultSampleRate) => {
+    pageFunction: (id, props, durationInFrames, fps, height, width, defaultCodec, defaultOutName, defaultVideoImageFormat, defaultPixelFormat, defaultProResProfile) => {
       window.remotion_setBundleMode({
         type: "composition",
         compositionName: id,
@@ -55220,8 +55011,7 @@ var makePage = async ({
         compositionDefaultOutName: defaultOutName,
         compositionDefaultVideoImageFormat: defaultVideoImageFormat,
         compositionDefaultPixelFormat: defaultPixelFormat,
-        compositionDefaultProResProfile: defaultProResProfile,
-        compositionDefaultSampleRate: defaultSampleRate
+        compositionDefaultProResProfile: defaultProResProfile
       });
     },
     args: [
@@ -55235,8 +55025,7 @@ var makePage = async ({
       composition.defaultOutName,
       composition.defaultVideoImageFormat,
       composition.defaultPixelFormat,
-      composition.defaultProResProfile,
-      composition.defaultSampleRate
+      composition.defaultProResProfile
     ],
     frame: null,
     page});
@@ -55565,7 +55354,7 @@ var takeFrame = async ({
   }
   const buf = await screenshot({
     page: freePage,
-    omitBackground: imageFormat === "png" || imageFormat === "webp",
+    omitBackground: imageFormat === "png",
     path: (wantsBuffer ? void 0 : output) ?? void 0,
     type: imageFormat,
     jpegQuality,
@@ -56114,8 +55903,7 @@ var innerRenderFrames = async ({
   imageSequencePattern,
   mediaCacheSizeInBytes,
   onLog,
-  darkMode,
-  sampleRate
+  darkMode
 }) => {
   if (outputDir) {
     if (!fs7__default.existsSync(outputDir)) {
@@ -56136,8 +55924,7 @@ var innerRenderFrames = async ({
     fps: composition.fps,
     compositionStart,
     realFrameRange,
-    forSeamlessAacConcatenation,
-    sampleRate
+    forSeamlessAacConcatenation
   });
   const framesToRender = getFramesToRender(realFrameRange, everyNthFrame);
   const lastFrame = framesToRender[framesToRender.length - 1];
@@ -56165,8 +55952,7 @@ var innerRenderFrames = async ({
       isMainTab: pageIndex === 0,
       mediaCacheSizeInBytes,
       onLog,
-      darkMode,
-      sampleRate
+      darkMode
     });
   };
   const getPool = async () => {
@@ -56310,8 +56096,7 @@ var internalRenderFramesRaw = ({
   offthreadVideoThreads,
   imageSequencePattern,
   mediaCacheSizeInBytes,
-  onLog,
-  sampleRate
+  onLog
 }) => {
   validateDimension2(composition.height, "height", "in the `config` object passed to `renderFrames()`");
   validateDimension2(composition.width, "width", "in the `config` object passed to `renderFrames()`");
@@ -56357,8 +56142,7 @@ var internalRenderFramesRaw = ({
           indent,
           offthreadVideoCacheSizeInBytes,
           binariesDirectory,
-          forceIPv4: false,
-          sampleRate
+          forceIPv4: false
         }, {
           onDownload
         }),
@@ -56415,8 +56199,7 @@ var internalRenderFramesRaw = ({
           imageSequencePattern,
           mediaCacheSizeInBytes,
           onLog,
-          darkMode: chromiumOptions.darkMode ?? false,
-          sampleRate
+          darkMode: chromiumOptions.darkMode ?? false
         });
       })
     ]).then((res) => {
@@ -56455,7 +56238,6 @@ var defaultCrfMap = {
   h265: 23,
   vp8: 9,
   vp9: 28,
-  av1: 30,
   prores: null,
   gif: null,
   "h264-mkv": 18,
@@ -56476,7 +56258,6 @@ var crfRanges = {
   h265: [0, 51],
   vp8: [4, 63],
   vp9: [0, 63],
-  av1: [0, 63],
   prores: [0, 0],
   gif: [0, 0],
   "h264-mkv": [1, 51],
@@ -56574,10 +56355,6 @@ var support = {
     audio: true
   },
   h265: {
-    video: true,
-    audio: true
-  },
-  av1: {
     video: true,
     audio: true
   },
@@ -56732,10 +56509,6 @@ var getCodecName = ({
   if (codec === "vp9") {
     return { encoderName: "libvpx-vp9", hardwareAccelerated: false };
   }
-  if (codec === "av1") {
-    Log.warn({ indent, logLevel }, "AV1 encoding is significantly slower than other codecs.");
-    return { encoderName: "libaom-av1", hardwareAccelerated: false };
-  }
   if (codec === "gif") {
     return { encoderName: "gif", hardwareAccelerated: false };
   }
@@ -56819,7 +56592,7 @@ var generateFfmpegArgs = ({
     throw new Error(`Codec ${codec} does not support hardware acceleration on ${process.platform}, but "hardwareAcceleration" is set to "required"`);
   }
   Log.verbose({ indent, logLevel, tag: "stitchFramesToVideo()" }, `Encoder: ${encoderName}, hardware accelerated: ${hardwareAccelerated}`);
-  const resolvedColorSpace = codec === "gif" ? "bt601" : colorSpace ?? DEFAULT_COLOR_SPACE;
+  const resolvedColorSpace = colorSpace ?? DEFAULT_COLOR_SPACE;
   const colorSpaceOptions = resolvedColorSpace === "bt709" ? [
     ["-colorspace:v", "bt709"],
     ["-color_primaries:v", "bt709"],
@@ -56890,7 +56663,7 @@ var validateEvenDimensionsWithCodec = ({
       actualHeight: height
     };
   }
-  if (codec !== "h264-mkv" && codec !== "h264" && codec !== "h265" && codec !== "av1" && codec !== "h264-ts") {
+  if (codec !== "h264-mkv" && codec !== "h264" && codec !== "h265" && codec !== "h264-ts") {
     return {
       actualWidth: width,
       actualHeight: height
@@ -56992,12 +56765,11 @@ var prespawnFfmpeg = (options) => {
   let exitCode = {
     type: "running"
   };
-  task.on("exit", (code, signal) => {
-    if (typeof code === "number" && code > 0 || signal) {
+  task.on("exit", (code) => {
+    if (typeof code === "number" && code > 0) {
       exitCode = {
         type: "quit-with-error",
-        exitCode: code ?? 1,
-        signal: signal ?? null,
+        exitCode: code,
         stderr: ffmpegOutput
       };
     } else {
@@ -57316,8 +57088,7 @@ var createSilentAudio = async ({
   logLevel,
   binariesDirectory,
   cancelSignal,
-  chunkLengthInSeconds,
-  sampleRate
+  chunkLengthInSeconds
 }) => {
   await callFf({
     bin: "ffmpeg",
@@ -57325,13 +57096,13 @@ var createSilentAudio = async ({
       "-f",
       "lavfi",
       "-i",
-      `anullsrc=r=${sampleRate}`,
+      `anullsrc=r=${DEFAULT_SAMPLE_RATE}`,
       "-c:a",
       "pcm_s16le",
       "-t",
       String(chunkLengthInSeconds),
       "-ar",
-      String(sampleRate),
+      String(DEFAULT_SAMPLE_RATE),
       outName
     ],
     indent,
@@ -57351,8 +57122,7 @@ var mergeAudioTrackUnlimited = async ({
   cancelSignal,
   onProgress,
   fps,
-  chunkLengthInSeconds,
-  sampleRate
+  chunkLengthInSeconds
 }) => {
   if (files.length === 0) {
     await createSilentAudio({
@@ -57361,8 +57131,7 @@ var mergeAudioTrackUnlimited = async ({
       indent,
       logLevel,
       binariesDirectory,
-      cancelSignal,
-      sampleRate
+      cancelSignal
     });
     onProgress(1);
     return;
@@ -57394,8 +57163,7 @@ var mergeAudioTrackUnlimited = async ({
             partialProgress[i6] = progress;
             callProgress();
           },
-          fps,
-          sampleRate
+          fps
         });
         return chunkOutname;
       }));
@@ -57419,8 +57187,7 @@ var mergeAudioTrackUnlimited = async ({
           callProgress();
         },
         fps,
-        chunkLengthInSeconds,
-        sampleRate
+        chunkLengthInSeconds
       });
       return;
     } finally {
@@ -57650,8 +57417,7 @@ var stringifyFfmpegFilter = ({
   asset,
   indent,
   logLevel,
-  presentationTimeOffsetInSeconds,
-  sampleRate
+  presentationTimeOffsetInSeconds
 }) => {
   if (channels === 0) {
     return null;
@@ -57695,12 +57461,12 @@ var stringifyFfmpegFilter = ({
   const padStart = startInVideoSeconds + (asset.trimLeft === 0 ? presentationTimeOffsetInSeconds : 0);
   return {
     filter: "[0:a]" + [
-      `aformat=sample_fmts=s16:sample_rates=${sampleRate}`,
+      `aformat=sample_fmts=s16:sample_rates=${DEFAULT_SAMPLE_RATE}`,
       ...trimAndTempoFilter,
       volumeFilter.value === "1" ? null : `volume=${volumeFilter.value}:eval=${volumeFilter.eval}`,
-      toneFrequency && toneFrequency !== 1 ? `asetrate=${sampleRate}*${toneFrequency},aresample=${sampleRate},atempo=1/${toneFrequency}` : null
+      toneFrequency && toneFrequency !== 1 ? `asetrate=${DEFAULT_SAMPLE_RATE}*${toneFrequency},aresample=${DEFAULT_SAMPLE_RATE},atempo=1/${toneFrequency}` : null
     ].filter(truthy2).join(",") + `[a0]`,
-    pad_end: padAtEnd > 1e-7 ? "apad=pad_len=" + Math.round(padAtEnd * sampleRate) : null,
+    pad_end: padAtEnd > 1e-7 ? "apad=pad_len=" + Math.round(padAtEnd * DEFAULT_SAMPLE_RATE) : null,
     pad_start: padStart === 0 ? null : `adelay=${new Array(channels + 1).fill((padStart * 1e3).toFixed(0)).join("|")}`,
     actualTrimLeft
   };
@@ -57719,8 +57485,7 @@ var preprocessAudioTrackUnlimited = async ({
   trimLeftOffset,
   trimRightOffset,
   forSeamlessAacConcatenation,
-  audioStreamIndex,
-  sampleRate
+  audioStreamIndex
 }) => {
   const { channels, duration, startTime } = await getAudioChannelsAndDuration({
     downloadMap,
@@ -57743,8 +57508,7 @@ var preprocessAudioTrackUnlimited = async ({
     volume: flattenVolumeArray(asset.volume),
     indent,
     logLevel,
-    presentationTimeOffsetInSeconds: startTime ?? 0,
-    sampleRate
+    presentationTimeOffsetInSeconds: startTime ?? 0
   });
   if (filter === null) {
     return null;
@@ -57757,7 +57521,7 @@ var preprocessAudioTrackUnlimited = async ({
     ["-ac", "2"],
     file ? ["-filter_script:a", file] : null,
     ["-c:a", "pcm_s16le"],
-    ["-ar", String(sampleRate)],
+    ["-ar", String(DEFAULT_SAMPLE_RATE)],
     ["-y", outName]
   ].flat(2).filter(truthy2);
   Log.verbose({ indent, logLevel }, "Preprocessing audio track:", JSON.stringify(args.join(" ")), "Filter:", filter.filter);
@@ -57802,8 +57566,7 @@ var createAudio = async ({
   chunkLengthInSeconds,
   trimLeftOffset,
   trimRightOffset,
-  forSeamlessAacConcatenation,
-  sampleRate
+  forSeamlessAacConcatenation
 }) => {
   const fileUrlAssets = await convertAssetsToFileUrls({
     assets,
@@ -57845,8 +57608,7 @@ var createAudio = async ({
       trimLeftOffset,
       trimRightOffset,
       forSeamlessAacConcatenation,
-      audioStreamIndex: asset.audioStreamIndex,
-      sampleRate
+      audioStreamIndex: asset.audioStreamIndex
     });
     preprocessProgress[index] = 1;
     updateProgress();
@@ -57856,8 +57618,7 @@ var createAudio = async ({
     indent,
     logLevel,
     binariesDirectory,
-    cancelSignal,
-    sampleRate
+    cancelSignal
   });
   const inlinedAudio = downloadMap.inlineAudioMixing.getListOfAssets();
   const preprocessed = [
@@ -57888,8 +57649,7 @@ var createAudio = async ({
       mergeProgress = progress;
       updateProgress();
     },
-    chunkLengthInSeconds,
-    sampleRate
+    chunkLengthInSeconds
   });
   await compressAudio({
     audioBitrate,
@@ -57996,8 +57756,7 @@ var innerStitchFramesToVideo = async ({
   binariesDirectory,
   separateAudioTo,
   metadata,
-  hardwareAcceleration,
-  sampleRate
+  hardwareAcceleration
 }, remotionRoot) => {
   validateDimension2(height, "height", "passed to `stitchFramesToVideo()`");
   validateDimension2(width, "width", "passed to `stitchFramesToVideo()`");
@@ -58102,8 +57861,7 @@ var innerStitchFramesToVideo = async ({
     cancelSignal: cancelSignal ?? void 0,
     trimLeftOffset: assetsInfo.trimLeftOffset,
     trimRightOffset: assetsInfo.trimRightOffset,
-    forSeamlessAacConcatenation: assetsInfo.forSeamlessAacConcatenation,
-    sampleRate
+    forSeamlessAacConcatenation: assetsInfo.forSeamlessAacConcatenation
   }) : null;
   if (mediaSupport.audio && !mediaSupport.video) {
     if (!resolvedAudioCodec) {
@@ -58314,7 +58072,7 @@ var validateNumberOfGifLoops = (numberOfGifLoops, codec) => {
     throw new RangeError(`Argument for numberOfGifLoops must be an integer, but got ${numberOfGifLoops}`);
   }
   if (codec !== "gif") {
-    throw new Error(`"numberOfGifLoops" can only be set if "codec" is set to "gif". The codec is "${codec}"`);
+    throw new Error(`"everyNthFrame" can only be set if "codec" is set to "gif". The codec is "${codec}"`);
   }
 };
 var validateOutputFilename = ({
@@ -58410,8 +58168,7 @@ var internalRenderMediaRaw = ({
   mediaCacheSizeInBytes,
   onLog,
   licenseKey,
-  isProduction,
-  sampleRate
+  isProduction
 }) => {
   const pixelFormat = userPixelFormat ?? compositionWithPossibleUnevenDimensions.defaultPixelFormat ?? DEFAULT_PIXEL_FORMAT;
   if (repro) {
@@ -58521,7 +58278,7 @@ var internalRenderMediaRaw = ({
   }
   const imageFormat = isAudioCodec(codec) ? "none" : provisionalImageFormat ?? compositionWithPossibleUnevenDimensions.defaultVideoImageFormat ?? DEFAULT_VIDEO_IMAGE_FORMAT;
   validateSelectedPixelFormatAndImageFormatCombination(pixelFormat, imageFormat);
-  const workingDir = fs7__default.mkdtempSync(path8__default.join(os4__default.tmpdir(), "react-motion-render"));
+  const workingDir = fs7__default.mkdtempSync(path8__default.join(os3__default.tmpdir(), "react-motion-render"));
   const preEncodedFileLocation = parallelEncoding ? path8__default.join(workingDir, "pre-encode." + getFileExtensionFromCodec(codec, audioCodec)) : null;
   if (onCtrlCExit && workingDir) {
     onCtrlCExit(`Delete ${workingDir}`, () => deleteDirectory(workingDir));
@@ -58643,8 +58400,7 @@ var internalRenderMediaRaw = ({
         webpackConfigOrServeUrl: serveUrl,
         offthreadVideoCacheSizeInBytes: offthreadVideoCacheSizeInBytes ?? null,
         binariesDirectory,
-        forceIPv4: false,
-        sampleRate
+        forceIPv4: false
       }, {
         onDownload
       });
@@ -58691,10 +58447,10 @@ var internalRenderMediaRaw = ({
           const id = startPerfMeasure("piping");
           const exitStatus = preStitcher?.getExitStatus();
           if (exitStatus?.type === "quit-successfully") {
-            throw new Error(`FFmpeg already quit while trying to pipe frame ${frame} to it. Stderr: ${exitStatus.stderr}`);
+            throw new Error(`FFmpeg already quit while trying to pipe frame ${frame} to it. Stderr: ${exitStatus.stderr}}`);
           }
           if (exitStatus?.type === "quit-with-error") {
-            throw new Error(`FFmpeg quit with code ${exitStatus.exitCode}${exitStatus.signal ? ` (signal ${exitStatus.signal})` : ""} while piping frame ${frame}. Stderr: ${exitStatus.stderr}`);
+            throw new Error(`FFmpeg quit with code ${exitStatus.exitCode} while piping frame ${frame}. Stderr: ${exitStatus.stderr}}`);
           }
           stitcherFfmpeg?.stdin?.write(buffer);
           stopPerfMeasure(id);
@@ -58725,8 +58481,7 @@ var internalRenderMediaRaw = ({
         chromeMode,
         imageSequencePattern: null,
         mediaCacheSizeInBytes,
-        onLog,
-        sampleRate
+        onLog
       });
       return renderFramesProc;
     }).then((renderFramesReturn) => {
@@ -58787,16 +58542,14 @@ var internalRenderMediaRaw = ({
         binariesDirectory,
         separateAudioTo,
         metadata,
-        hardwareAcceleration,
-        sampleRate
+        hardwareAcceleration
       });
     }).then((buffer) => {
       Log.verbose({ indent, logLevel }, "Stitching done in", encodedDoneIn + "ms");
       slowestFrames.sort((a6, b6) => b6.time - a6.time);
       const result = {
         buffer,
-        slowestFrames,
-        contentType: mimeLookup("file." + getFileExtensionFromCodec(codec, audioCodec)) || "application/octet-stream"
+        slowestFrames
       };
       const sendTelemetryAndResolve = () => {
         if (licenseKey === null) {
@@ -58927,7 +58680,6 @@ var renderMedia = ({
   compositionStart,
   mediaCacheSizeInBytes,
   isProduction,
-  sampleRate,
   ...apiKeyOrLicenseKey
 }) => {
   const indent = false;
@@ -59017,8 +58769,7 @@ var renderMedia = ({
     mediaCacheSizeInBytes: mediaCacheSizeInBytes ?? null,
     licenseKey: licenseKey ?? apiKey ?? null,
     onLog: defaultOnLog,
-    isProduction: isProduction ?? null,
-    sampleRate: sampleRate ?? composition.defaultSampleRate ?? 48e3
+    isProduction: isProduction ?? null
   });
 };
 var innerSelectComposition = async ({
@@ -59053,8 +58804,7 @@ var innerSelectComposition = async ({
     isMainTab: true,
     mediaCacheSizeInBytes,
     initialMemoryAvailable: getAvailableMemory(logLevel),
-    darkMode: chromiumOptions.darkMode ?? false,
-    sampleRate: 48e3
+    darkMode: chromiumOptions.darkMode ?? false
   });
   await puppeteerEvaluateWithCatch({
     page,
@@ -59100,8 +58850,7 @@ var innerSelectComposition = async ({
     defaultOutName,
     defaultVideoImageFormat,
     defaultPixelFormat,
-    defaultProResProfile,
-    defaultSampleRate
+    defaultProResProfile
   } = res;
   return {
     metadata: {
@@ -59116,8 +58865,7 @@ var innerSelectComposition = async ({
       defaultOutName,
       defaultVideoImageFormat,
       defaultPixelFormat,
-      defaultProResProfile,
-      defaultSampleRate
+      defaultProResProfile
     },
     propsSize: size
   };
@@ -59168,8 +58916,7 @@ var internalSelectCompositionRaw = async (options) => {
       indent,
       offthreadVideoCacheSizeInBytes,
       binariesDirectory,
-      forceIPv4: false,
-      sampleRate: 48e3
+      forceIPv4: false
     }, {
       onDownload: () => {
         return;
@@ -73443,6 +73190,18 @@ function buildTransitionCommand(inputFiles, durations, transition, transitionDur
 var CAPTION_FPS = 30;
 var SEGMENT_THRESHOLD_SECONDS = 12;
 var SEGMENT_SECONDS = 8;
+function resolveSegmentConcurrency(segmentCount, totalMemMb = totalmem() / (1024 * 1024), cpuCount = cpus().length) {
+  const override = process.env.CAPTION_SEGMENT_CONCURRENCY;
+  if (override !== void 0 && override !== "") {
+    const parsed = Number.parseInt(override, 10);
+    if (Number.isFinite(parsed) && parsed >= 1) return Math.max(1, Math.min(parsed, segmentCount));
+  }
+  const PER_RENDER_MB = 1024;
+  const RESERVE_MB = 768;
+  const byMem = Math.floor((totalMemMb - RESERVE_MB) / PER_RENDER_MB);
+  const byCpu = Math.max(1, cpuCount - 1);
+  return Math.max(1, Math.min(segmentCount, byMem, byCpu));
+}
 var NOOP_LOGGER = {
   info: () => {
   },
@@ -73503,6 +73262,50 @@ async function renderSinglePass(opts, progressBase = 0, progressSpan = 0.95) {
   });
   return outputLocation;
 }
+function startLocalFileServer(dir) {
+  const server = http.createServer((req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Range");
+    if (req.method === "OPTIONS") {
+      res.statusCode = 204;
+      res.end();
+      return;
+    }
+    const name = path8__default.basename(decodeURIComponent((req.url ?? "/").split("?")[0] ?? "/"));
+    const filePath = path8__default.join(dir, name);
+    if (!name || !fs7__default.existsSync(filePath)) {
+      res.statusCode = 404;
+      res.end();
+      return;
+    }
+    const { size } = fs7__default.statSync(filePath);
+    res.setHeader("Content-Type", "video/mp4");
+    res.setHeader("Accept-Ranges", "bytes");
+    const range2 = req.headers.range;
+    if (range2) {
+      const m4 = /bytes=(\d*)-(\d*)/.exec(range2);
+      const start = m4?.[1] ? parseInt(m4[1], 10) : 0;
+      const end = m4?.[2] ? parseInt(m4[2], 10) : size - 1;
+      res.statusCode = 206;
+      res.setHeader("Content-Range", `bytes ${start}-${end}/${size}`);
+      res.setHeader("Content-Length", String(end - start + 1));
+      fs7__default.createReadStream(filePath, { start, end }).pipe(res);
+    } else {
+      res.setHeader("Content-Length", String(size));
+      fs7__default.createReadStream(filePath).pipe(res);
+    }
+  });
+  return new Promise((resolve3) => {
+    server.listen(0, "127.0.0.1", () => {
+      const port = server.address().port;
+      resolve3({
+        origin: `http://127.0.0.1:${port}`,
+        close: () => new Promise((r6) => server.close(() => r6()))
+      });
+    });
+  });
+}
 async function renderChunked(opts, totalSeconds) {
   const {
     bundlePath,
@@ -73517,14 +73320,18 @@ async function renderChunked(opts, totalSeconds) {
   } = opts;
   const allWords = captionConfig.words ?? [];
   const segmentCount = Math.ceil(totalSeconds / SEGMENT_SECONDS);
-  const segmentPaths = [];
+  const segmentPaths = new Array(segmentCount);
+  const parallel = resolveSegmentConcurrency(segmentCount);
+  const fileServer = await startLocalFileServer(tmpDir2);
+  const fileServerOrigin = fileServer.origin;
   logger2.info("Rendering captions in chunks", {
     jobId,
     totalSeconds,
     segmentCount,
-    wordCount: allWords.length
+    wordCount: allWords.length,
+    parallel
   });
-  for (let i6 = 0; i6 < segmentCount; i6++) {
+  const renderSegment = async (i6) => {
     if (signal.aborted) throw new Error("Caption render aborted");
     const startSec = i6 * SEGMENT_SECONDS;
     const endSec = Math.min(startSec + SEGMENT_SECONDS, totalSeconds);
@@ -73560,7 +73367,9 @@ async function renderChunked(opts, totalSeconds) {
     }));
     const segmentInputProps = {
       ...captionConfig,
-      videoUrl: `file://${trimmedSrc}`,
+      // Served over loopback HTTP (not file://) — Chromium/OffthreadVideo can't
+      // load file:// segments (fails on WSL2 and in the compositor).
+      videoUrl: `${fileServerOrigin}/${path8__default.basename(trimmedSrc)}`,
       words: segmentWords,
       durationInFrames: Math.max(1, Math.ceil(segDurationSec * CAPTION_FPS))
     };
@@ -73583,24 +73392,38 @@ async function renderChunked(opts, totalSeconds) {
         inputProps: segmentInputProps,
         concurrency,
         timeoutInMilliseconds: 18e4,
-        onProgress: ({ progress }) => {
-          const overall = (i6 + progress) / segmentCount;
-          if (onProgress) {
-            void Promise.resolve(onProgress(Math.min(overall * 0.95, 0.95))).catch((err) => {
-              logger2.warn("Progress callback failed (non-fatal)", {
-                jobId,
-                error: err instanceof Error ? err.message : String(err)
-              });
-            });
-          }
-        },
         cancelSignal
       });
     } finally {
       signal.removeEventListener("abort", onAbort);
     }
-    segmentPaths.push(segOut);
-    logger2.info("Caption chunk render done", { jobId, chunkIdx: i6 });
+    segmentPaths[i6] = segOut;
+  };
+  let cursor = 0;
+  let completed = 0;
+  const worker = async () => {
+    while (true) {
+      const i6 = cursor++;
+      if (i6 >= segmentCount) return;
+      await renderSegment(i6);
+      completed++;
+      if (onProgress) {
+        void Promise.resolve(onProgress(Math.min(completed / segmentCount * 0.95, 0.95))).catch(
+          (err) => {
+            logger2.warn("Progress callback failed (non-fatal)", {
+              jobId,
+              error: err instanceof Error ? err.message : String(err)
+            });
+          }
+        );
+      }
+      logger2.info("Caption chunk render done", { jobId, chunkIdx: i6, completed, segmentCount });
+    }
+  };
+  try {
+    await Promise.all(Array.from({ length: Math.min(parallel, segmentCount) }, () => worker()));
+  } finally {
+    await fileServer.close();
   }
   const concatListPath = path8__default.join(tmpDir2, "concat.txt");
   fs7__default.writeFileSync(
@@ -73989,6 +73812,15 @@ var VALIDATE_KEYFRAME_WINDOW_SEC = 5;
 var NOOP_LOGGER5 = { info: () => {
 }, warn: () => {
 } };
+function shouldUseSinglePassXfade(inputCount, resolution, totalMemMb = totalmem() / (1024 * 1024)) {
+  const override = process.env.VIDEO_MERGE_SINGLE_PASS;
+  if (override === "1" || override === "true") return true;
+  if (override === "0" || override === "false") return false;
+  const pixelRatio = resolution.width * resolution.height / (1920 * 1080);
+  const perInputMb = Math.max(120, Math.round(pixelRatio * 200));
+  const estPeakMb = 400 + inputCount * perInputMb;
+  return totalMemMb >= estPeakMb * 2 + 1536;
+}
 async function runPairwiseXfadeMerge(opts) {
   const {
     jobId,
@@ -74256,43 +74088,25 @@ ${r6.stderr.split("\n").slice(-10).join("\n")}`
       height: MAX_HEIGHT
     };
   }
-  const normalizedPaths = [];
-  for (let i6 = 0; i6 < workingPaths.length; i6++) {
-    const dest = join(workDir, `normalized-${i6}.mp4`);
-    const args = buildNormalizeCommand(workingPaths[i6], dest, resolution, {
-      hasAudio: inspections[i6].hasAudio
-    });
-    logger2.info("Normalizing input", {
-      jobId,
-      index: i6,
-      codec: inspections[i6].videoCodec,
-      pixFmt: inspections[i6].pixFmt,
-      fps: inspections[i6].fps,
-      hasAudio: inspections[i6].hasAudio
-    });
-    const result = await runFFmpeg(args, { timeoutMs: NORMALIZE_TIMEOUT_MS, signal });
-    if (result.exitCode !== 0) {
-      const tail = result.stderr.split("\n").slice(-20).join("\n");
-      throw new Error(`Failed to normalize input ${i6 + 1} (exit ${result.exitCode}):
-${tail}`);
-    }
-    normalizedPaths.push(dest);
-  }
   const durations = inspections.map((it) => it.duration);
-  const hasAudioTracks = inspections.map(() => true);
+  const hasAudioTracks = inspections.map((it) => it.hasAudio);
   const outputPath = join(workDir, "output.mp4");
   const transition = config.transition;
   const audioMode = config.audioMode;
   const usesXfade = transition === "crossfade" || transition === "fadeBlack";
-  const N2 = normalizedPaths.length;
+  const N2 = workingPaths.length;
   let finalOutputPath;
   let computedDuration;
-  if (usesXfade && N2 > 2) {
-    logger2.info("Running FFmpeg merge (pairwise xfade)", { jobId, inputCount: N2, transition });
+  if (usesXfade && N2 > 2 && !shouldUseSinglePassXfade(N2, resolution)) {
+    logger2.info("Running FFmpeg merge (pairwise xfade, memory-bounded)", {
+      jobId,
+      inputCount: N2,
+      transition
+    });
     finalOutputPath = await runPairwiseXfadeMerge({
       jobId,
       tempDir: workDir,
-      inputs: normalizedPaths,
+      inputs: workingPaths,
       durations,
       hasAudioTracks,
       transition,
@@ -74304,6 +74118,28 @@ ${tail}`);
     });
     computedDuration = durations.reduce((a6, b6) => a6 + b6, 0) - (N2 - 1) * config.transitionDuration;
   } else if (transition === "none") {
+    const normalizedPaths = [];
+    for (let i6 = 0; i6 < workingPaths.length; i6++) {
+      const dest = join(workDir, `normalized-${i6}.mp4`);
+      const args2 = buildNormalizeCommand(workingPaths[i6], dest, resolution, {
+        hasAudio: inspections[i6].hasAudio
+      });
+      logger2.info("Normalizing input", {
+        jobId,
+        index: i6,
+        codec: inspections[i6].videoCodec,
+        pixFmt: inspections[i6].pixFmt,
+        fps: inspections[i6].fps,
+        hasAudio: inspections[i6].hasAudio
+      });
+      const result2 = await runFFmpeg(args2, { timeoutMs: NORMALIZE_TIMEOUT_MS, signal });
+      if (result2.exitCode !== 0) {
+        const tail = result2.stderr.split("\n").slice(-20).join("\n");
+        throw new Error(`Failed to normalize input ${i6 + 1} (exit ${result2.exitCode}):
+${tail}`);
+      }
+      normalizedPaths.push(dest);
+    }
     const listFile = join(workDir, "concat-list.txt");
     const listBody = normalizedPaths.map((p3) => `file '${p3.replace(/'/g, "'\\''")}'`).join("\n");
     await writeFile$1(listFile, `${listBody}
@@ -74320,7 +74156,7 @@ ${tail}`);
     computedDuration = durations.reduce((a6, b6) => a6 + b6, 0);
   } else {
     const args = buildTransitionCommand(
-      normalizedPaths,
+      workingPaths,
       durations,
       transition,
       config.transitionDuration,
@@ -74328,9 +74164,13 @@ ${tail}`);
       hasAudioTracks,
       resolution
     );
-    args.unshift("-threads", "2");
+    args.unshift("-threads", "0");
     args.push("-y", outputPath);
-    logger2.info("Running FFmpeg merge", { jobId, inputCount: N2, transition });
+    logger2.info("Running FFmpeg merge (single-pass xfade, no pre-normalize)", {
+      jobId,
+      inputCount: N2,
+      transition
+    });
     const result = await runFFmpeg(args, { timeoutMs: MERGE_TIMEOUT_MS, signal });
     if (result.exitCode !== 0) {
       const tail = result.stderr.split("\n").slice(-20).join("\n");
@@ -74570,7 +74410,7 @@ function resolveConfig() {
     throw new Error("WYREN_API_KEY is required (a frm_... MCP API key or a backend-issued JWT).");
   }
   const backendUrl = (process.env.WYREN_BACKEND_URL ?? "http://localhost:4000").replace(/\/$/, "");
-  const concurrency = Math.max(1, os4__default.cpus().length - 1);
+  const concurrency = Math.max(1, os3__default.cpus().length - 1);
   return { token, backendUrl, concurrency };
 }
 function wsUrlFor(backendUrl) {
@@ -74815,7 +74655,7 @@ async function runJob(socket, client, jobType, jobId, concurrency, cancelSignal)
   const userId = job.user_id;
   if (!userId) throw new Error(`Job ${jobId} has no user_id`);
   await client.markProcessing(jobId);
-  const workDir = fs7__default.mkdtempSync(path8__default.join(os4__default.tmpdir(), `wyren-daemon-${jobId}-`));
+  const workDir = fs7__default.mkdtempSync(path8__default.join(os3__default.tmpdir(), `wyren-daemon-${jobId}-`));
   try {
     await handler7({ socket, client, jobId, userId, job, concurrency, cancelSignal, workDir });
     log("Job completed", { jobType, jobId });
@@ -74841,6 +74681,7 @@ var Daemon = class {
   client;
   socket = null;
   heartbeat = null;
+  reconnectTimer = null;
   reconnectAttempts = 0;
   inFlight = /* @__PURE__ */ new Map();
   stopped = false;
@@ -74857,6 +74698,10 @@ var Daemon = class {
     this.socket = socket;
     socket.on("open", () => {
       this.reconnectAttempts = 0;
+      if (this.reconnectTimer) {
+        clearTimeout(this.reconnectTimer);
+        this.reconnectTimer = null;
+      }
       log("WebSocket open; registering", { capabilities: [...CAPABILITIES] });
       this.sendRegisterBurst();
       this.startHeartbeat();
@@ -74954,12 +74799,16 @@ var Daemon = class {
     this.reconnectAttempts += 1;
     const delay = Math.min(RECONNECT_BASE_MS * 2 ** (this.reconnectAttempts - 1), RECONNECT_MAX_MS);
     log("Scheduling reconnect", { attempt: this.reconnectAttempts, delayMs: delay });
-    const timer = setTimeout(() => this.connect(), delay);
-    timer.unref?.();
+    if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
+    this.reconnectTimer = setTimeout(() => this.connect(), delay);
   }
   stop() {
     this.stopped = true;
     this.stopHeartbeat();
+    if (this.reconnectTimer) {
+      clearTimeout(this.reconnectTimer);
+      this.reconnectTimer = null;
+    }
     this.abortAllInFlight("daemon shutdown");
     try {
       this.socket?.close(1e3, "shutdown");
