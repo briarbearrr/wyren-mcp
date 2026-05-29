@@ -37572,9 +37572,12 @@ var Daemon = class {
       void this.handleDispatch(socket, msg);
     });
     socket.on("close", (code, reason) => {
-      log("WebSocket closed", { code, reason: reason.toString() });
+      log("WebSocket closed", {
+        code,
+        reason: reason.toString(),
+        inFlight: this.inFlight.size
+      });
       this.cleanupSocket();
-      this.abortAllInFlight("socket disconnected");
       this.scheduleReconnect();
     });
     socket.on("error", (err) => {
