@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.3
+
+- **Fixed** Caption renders failed on the daemon. Three compounding bugs: (1) the worker bundle **inlined `ffmpeg-static`** (a build misconfig overrode the external list), so it resolved the ffmpeg binary relative to the bundle dir — every ffmpeg call silently failed and captions died with a misleading Remotion "404 fetching segment"; now forced external + the trim fails loud on a bad exit. (2) The caption overlay eagerly loaded **all 10 Google Font families** every render (hundreds of requests), and the chunked path opened ~30 headless Chromium tabs (`cpus-1` × parallel segments) — together they starved the worker's loopback file server until it refused connections; now only the selected font loads and per-render concurrency is bounded. Rebuilt from monorepo main `910ad36`. Verified end-to-end on a real daemon.
+- **Fixed** The Linux installer now enables **systemd linger** (`loginctl enable-linger`) in addition to `systemctl --user enable --now`, so the worker auto-starts at boot and keeps running without an active login session (previously it stopped when the session ended → "daemon not connected").
+
 ## 1.2.2
 
 - **Fixed** Caption renders failed on hosts that can't reach the media CDN directly — broken-IPv6 networks (WSL2, and some end-user machines), where the bundled ffmpeg core-dumps and Chromium `net::ERR_FAIL`s fetching the CDN even though Node's `fetch` reaches it fine. The worker now prefetches the source video — and any remote audio track — via Node `fetch` and serves them (with the trimmed segments) over one loopback HTTP server, so ffmpeg and Chromium/OffthreadVideo only read from `127.0.0.1`. The render then completes on any network. Rebuilt from monorepo main `df78a6b`. Verified end-to-end on a broken-IPv6 box (14 s chunked ~32 s; 8 s single-pass with muxed audio ~24 s).

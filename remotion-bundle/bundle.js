@@ -2919,20 +2919,21 @@ const COMMON_FONT_OPTIONS = {
   weights: ["400", "700", "900"],
   subsets: ["latin"]
 };
-const FONT_FAMILY_MAP = {
-  Inter: Inter_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
-  Montserrat: Montserrat_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
-  "Playfair Display": PlayfairDisplay_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
-  Roboto: Roboto_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
+const FONT_LOADERS = {
+  Inter: () => Inter_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
+  Montserrat: () => Montserrat_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
+  "Playfair Display": () => PlayfairDisplay_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
+  Roboto: () => Roboto_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
   // Roboto Mono / display / script fonts ship few weights — keep defaults so
   // a font-weight choice we limit out doesn't cause a runtime miss.
-  "Roboto Mono": RobotoMono_loadFont().fontFamily,
-  "Bebas Neue": loadFont().fontFamily,
-  Lato: Lato_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
-  Oswald: Oswald_loadFont("normal", { weights: ["400", "700"], subsets: ["latin"] }).fontFamily,
-  Poppins: Poppins_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
-  "Permanent Marker": PermanentMarker_loadFont().fontFamily
+  "Roboto Mono": () => RobotoMono_loadFont().fontFamily,
+  "Bebas Neue": () => loadFont().fontFamily,
+  Lato: () => Lato_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
+  Oswald: () => Oswald_loadFont("normal", { weights: ["400", "700"], subsets: ["latin"] }).fontFamily,
+  Poppins: () => Poppins_loadFont("normal", COMMON_FONT_OPTIONS).fontFamily,
+  "Permanent Marker": () => PermanentMarker_loadFont().fontFamily
 };
+const FONT_FAMILY_CACHE = /* @__PURE__ */ new Map();
 const PREMOUNT_FRAMES = 10;
 function wordsToRemotionCaptions(words) {
   return words.map((word) => ({
@@ -2960,10 +2961,14 @@ function resolveTextShadow(outlineColor, outlineWidth) {
   return "2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.6)";
 }
 function resolveFontFamily(name) {
-  const resolved = FONT_FAMILY_MAP[name];
-  if (!resolved) {
-    throw new Error(`[CaptionOverlay] Unknown font family: "${name}". Add it to FONT_FAMILY_MAP.`);
+  const cached = FONT_FAMILY_CACHE.get(name);
+  if (cached) return cached;
+  const loader = FONT_LOADERS[name];
+  if (!loader) {
+    throw new Error(`[CaptionOverlay] Unknown font family: "${name}". Add it to FONT_LOADERS.`);
   }
+  const resolved = loader();
+  FONT_FAMILY_CACHE.set(name, resolved);
   return resolved;
 }
 const TypewriterWord = ({ token, absoluteTimeMs, style }) => {
