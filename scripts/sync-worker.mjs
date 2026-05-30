@@ -14,7 +14,7 @@
 //
 // Provenance of the artifacts currently vendored in this package:
 //   monorepo branch: main
-//   monorepo commit: 910ad36
+//   monorepo commit: d9744f8
 //   tsup config:     backend/tsup.worker.config.ts
 //   externals (must stay in this package's dependencies, in sync with that
 //     config's EXTERNAL_RUNTIME_DEPS):

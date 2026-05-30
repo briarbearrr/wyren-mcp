@@ -2079,6 +2079,34 @@ var Daemon = class {
   reconnectAttempts = 0;
   inFlight = /* @__PURE__ */ new Map();
   stopped = false;
+  // Cap CONCURRENT heavy renders. Each job spawns headless Chromium + ffmpeg +
+  // its own in-process loopback file server, all sharing this one Node event
+  // loop; running too many at once starves the event loop until the loopback
+  // servers refuse connections mid-render. The backend can dispatch a whole
+  // queue at once, so the daemon must self-limit. `WYREN_MAX_CONCURRENT_RENDERS`
+  // overrides (raise it on a beefy idle machine; lower to 1 for max safety).
+  maxConcurrentRenders = Math.max(
+    1,
+    Number.parseInt(process.env.WYREN_MAX_CONCURRENT_RENDERS ?? "", 10) || 1
+  );
+  activeRenders = 0;
+  renderQueue = [];
+  /** Baton-passing semaphore: resolve when a render slot is free. */
+  acquireRenderSlot() {
+    if (this.activeRenders < this.maxConcurrentRenders) {
+      this.activeRenders += 1;
+      return Promise.resolve();
+    }
+    return new Promise((resolve) => this.renderQueue.push(resolve));
+  }
+  releaseRenderSlot() {
+    const next = this.renderQueue.shift();
+    if (next) {
+      next();
+    } else {
+      this.activeRenders = Math.max(0, this.activeRenders - 1);
+    }
+  }
   start() {
     this.connect();
   }
@@ -2131,6 +2159,10 @@ var Daemon = class {
     }
     const controller = new AbortController();
     this.inFlight.set(jobId, controller);
+    await this.acquireRenderSlot();
+    if (this.queueDepth() > 0) {
+      log("Render slot acquired", { jobId, active: this.activeRenders, queued: this.queueDepth() });
+    }
     try {
       await runJob(socket, this.client, jobType, jobId, this.cfg.concurrency, controller.signal);
     } catch (err) {
@@ -2142,7 +2174,11 @@ var Daemon = class {
       await this.safeFail(jobId, err instanceof Error ? err.message : String(err), true);
     } finally {
       this.inFlight.delete(jobId);
+      this.releaseRenderSlot();
     }
+  }
+  queueDepth() {
+    return this.renderQueue.length;
   }
   async safeFail(jobId, reason, retryable) {
     try {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.4
+
+- **Fixed** The daemon ran every dispatched job immediately at host-core concurrency, so a queue/batch of heavy renders starved the shared event loop until the in-process loopback file servers refused connections mid-render. It now caps concurrent heavy renders (default 1; `WYREN_MAX_CONCURRENT_RENDERS` to raise) and queues the rest — jobs are still ACK'd immediately so the backend never falls back. Built from monorepo main `d9744f8`.
+
 ## 1.2.3
 
 - **Fixed** Caption renders failed on the daemon. Three compounding bugs: (1) the worker bundle **inlined `ffmpeg-static`** (a build misconfig overrode the external list), so it resolved the ffmpeg binary relative to the bundle dir — every ffmpeg call silently failed and captions died with a misleading Remotion "404 fetching segment"; now forced external + the trim fails loud on a bad exit. (2) The caption overlay eagerly loaded **all 10 Google Font families** every render (hundreds of requests), and the chunked path opened ~30 headless Chromium tabs (`cpus-1` × parallel segments) — together they starved the worker's loopback file server until it refused connections; now only the selected font loads and per-render concurrency is bounded. Rebuilt from monorepo main `910ad36`. Verified end-to-end on a real daemon.
